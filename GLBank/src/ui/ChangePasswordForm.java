@@ -17,12 +17,13 @@ public class ChangePasswordForm extends javax.swing.JDialog {
     /**
      * Creates new form ChangePasswordForm
      */
-    public ChangePasswordForm(java.awt.Frame parent, boolean modal) {
+    public ChangePasswordForm(java.awt.Frame parent, boolean modal, int idemp) {
         super(parent, modal);
         initComponents();
         lblErrorBadPassword.setVisible(false);
         lblErrorDoNotMatch.setVisible(false);
         lblInvalidPassword.setVisible(false);
+        this.idemp=idemp;
        
     }
 
@@ -69,6 +70,12 @@ public class ChangePasswordForm extends javax.swing.JDialog {
             }
         });
 
+        txtNewPass2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNewPass2ActionPerformed(evt);
+            }
+        });
+
         lblErrorDoNotMatch.setForeground(new java.awt.Color(255, 51, 51));
         lblErrorDoNotMatch.setText("Passwords do not match !");
 
@@ -83,55 +90,54 @@ public class ChangePasswordForm extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(90, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(119, 119, 119))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNewPasword1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNewPassword2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtOldPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCancel)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnConfirm))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtNewPasword1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNewPass1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtOldPassword)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtOldPass, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtNewPassword2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNewPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblErrorBadPassword)
-                    .addComponent(lblInvalidPassword)
-                    .addComponent(lblErrorDoNotMatch))
-                .addGap(74, 74, 74))
+                    .addComponent(lblErrorDoNotMatch)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtNewPass2, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblInvalidPassword)
+                        .addComponent(txtNewPass1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblErrorBadPassword)
+                        .addComponent(txtOldPass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(80, 80, 80))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtOldPassword)
-                    .addComponent(txtOldPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtOldPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtOldPassword))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblErrorBadPassword)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNewPass1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNewPasword1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblInvalidPassword)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(lblInvalidPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNewPassword2)
-                    .addComponent(txtNewPass2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNewPass2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNewPassword2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblErrorDoNotMatch)
-                .addGap(27, 27, 27)
+                .addComponent(lblErrorDoNotMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
                     .addComponent(btnConfirm))
-                .addGap(47, 47, 47))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -142,25 +148,25 @@ public class ChangePasswordForm extends javax.swing.JDialog {
        String newPassword1 = new String(txtNewPass1.getPassword());
        String newPassword2 = new String(txtNewPass2.getPassword());
        
-       boolean validPassword = false;
+       boolean validPassword = isPasswordValid(newPassword1);
        boolean samePasswords = newPassword1.equals(newPassword2);
        lblInvalidPassword.setVisible(false);
+        if (!validPassword) {
+            if (newPassword1.trim().length()==0) {
+                lblInvalidPassword.setText("Enter new password !");
+                lblInvalidPassword.setVisible(true);
+            } else {
+                lblInvalidPassword.setText("Invalid password !");
+                lblInvalidPassword.setVisible(true);                    
+            }
+        }
         if (samePasswords) {
             lblErrorDoNotMatch.setVisible(false);
-            validPassword = isPasswordValid(newPassword1);
-            if (!validPassword) {
-                if (newPassword1.trim().length()==0) {
-                    lblInvalidPassword.setText("Enter new password !");
-                    lblInvalidPassword.setVisible(true);
-                } else {
-                    lblInvalidPassword.setText("Invalid password !");
-                    lblInvalidPassword.setVisible(true);                    
-                }
-            }
         } else {
             lblErrorDoNotMatch.setVisible(true);
         }
         boolean correctOldPassword = new ConnectionProvider().isEmployeePasswordValid(idemp, oldPassword);
+        System.out.println(correctOldPassword);
         if (correctOldPassword) {
             lblErrorBadPassword.setVisible(false);
         } else {
@@ -178,47 +184,10 @@ public class ChangePasswordForm extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void txtNewPass2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNewPass2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNewPass2ActionPerformed
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ChangePasswordForm dialog = new ChangePasswordForm(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

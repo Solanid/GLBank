@@ -54,8 +54,8 @@ public class ConnectionProvider {
         return false;
     }
     
-    public boolean isEmployeePasswordValidById(int idemp, String password) {
-        String query="Select idemp From LoginEmployee WHERE login LIKE BINARY ? AND password LIKE BINARY ?";
+    public boolean isEmployeePasswordValid(int idemp, String password) {
+        String query="Select idemp From LoginEmployee WHERE idemp LIKE BINARY ? AND password LIKE BINARY ?";
         Connection conn = getConnection();
         if (conn!=null) {
             try {

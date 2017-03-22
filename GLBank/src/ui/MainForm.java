@@ -110,7 +110,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void menuChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuChangePasswordActionPerformed
         // TODO add your handling code here:
-        ChangePasswordForm changePasswordDialogForm = new ChangePasswordForm(this, true);
+        ChangePasswordForm changePasswordDialogForm = new ChangePasswordForm(this, true, idemp);
         changePasswordDialogForm.setLocationRelativeTo(null);
         changePasswordDialogForm.setVisible(true);
     }//GEN-LAST:event_menuChangePasswordActionPerformed
