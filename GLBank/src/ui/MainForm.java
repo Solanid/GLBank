@@ -6,7 +6,9 @@
 package ui;
 
 import database.ConnectionProvider;
+import glbank.Client;
 import glbank.Employee;
+import java.util.List;
 
 /**
  *
@@ -29,13 +31,14 @@ public class MainForm extends javax.swing.JFrame {
     
     private void initForm() {
         printEmployeeName();
+        showListOfClients();
     }
     
     private void printEmployeeName() {
         Employee employee = conn.getEmployee(idemp);
         if(employee!=null) {
             String name = employee.getFirstname()+" "+employee.getLastname();
-            lblEmployeeName.setText("Logged user: "+name);
+            lblEmployeeName.setText("Logged in user: "+name);
         }
     }
     /**
@@ -49,6 +52,11 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenu1 = new javax.swing.JMenu();
         lblEmployeeName = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        comboListOfAllClients = new javax.swing.JComboBox<>();
+        jSeparator2 = new javax.swing.JSeparator();
+        btnNewClient = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         menuChangePassword = new javax.swing.JMenuItem();
@@ -59,7 +67,23 @@ public class MainForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblEmployeeName.setText("Logged user: Firstname LastName");
+        lblEmployeeName.setText("Logged in user: Firstname LastName");
+
+        jLabel1.setText("Select client:");
+
+        comboListOfAllClients.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "choose client" }));
+        comboListOfAllClients.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboListOfAllClientsActionPerformed(evt);
+            }
+        });
+
+        btnNewClient.setText("New client");
+        btnNewClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewClientActionPerformed(evt);
+            }
+        });
 
         jMenu2.setText("Menu");
 
@@ -92,17 +116,43 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(577, Short.MAX_VALUE)
-                .addComponent(lblEmployeeName)
-                .addGap(28, 28, 28))
+            .addComponent(jSeparator1)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lblEmployeeName))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboListOfAllClients, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 487, Short.MAX_VALUE))
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(btnNewClient, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(13, 13, 13)
                 .addComponent(lblEmployeeName)
-                .addContainerGap(442, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(comboListOfAllClients, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 328, Short.MAX_VALUE)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnNewClient)
+                .addGap(12, 12, 12))
         );
 
         pack();
@@ -121,17 +171,42 @@ public class MainForm extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_menuExitActionPerformed
 
+    private void comboListOfAllClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboListOfAllClientsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboListOfAllClientsActionPerformed
+
+    private void btnNewClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewClientActionPerformed
+        NewClientForm newClientForm = new NewClientForm(this, true);
+        newClientForm.setLocationRelativeTo(null);
+        newClientForm.setVisible(true);
+    }//GEN-LAST:event_btnNewClientActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNewClient;
+    private javax.swing.JComboBox<String> comboListOfAllClients;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblEmployeeName;
     private javax.swing.JMenuItem menuChangePassword;
     private javax.swing.JMenuItem menuExit;
     // End of variables declaration//GEN-END:variables
+
+    private void showListOfClients() {
+        List<Client> list = new ConnectionProvider().getListOfAllClients();
+        if (list!=null && list.size()>0) {
+            for (Client c:list) {
+                String item = c.getLastname()+" "+c.getFirstname()+"  ("+c.getDob()+") ";
+                comboListOfAllClients.addItem(item);
+            }
+        }
+    }
 }

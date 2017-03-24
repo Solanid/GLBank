@@ -5,14 +5,18 @@
  */
 package database;
 
+import glbank.Client;
 import glbank.Employee;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -156,5 +160,30 @@ public class ConnectionProvider {
                 System.out.println("changePassword Error: "+ex.toString());
             }
         }
+    }
+    
+    public List<Client> getListOfAllClients() {
+        String query = "SELECT * FROM clients "+
+                "INNER JOIN clientdetails ON clients.idc=clientdetails.idc "+
+                "WHERE disable='F' ORDER BY lastname, firstname";
+        Connection conn = getConnection();
+        List<Client> clientList = new ArrayList<>();
+        if (conn!=null) {
+            try(Statement statement = conn.createStatement()) {
+                ResultSet rs = statement.executeQuery(query);
+                while(rs.next()) {
+                    int idc = rs.getInt("clients.idc");
+                    String firstname = rs.getString("firstname");
+                    String lastname = rs.getString("lastname");
+                    Date date = rs.getDate("dob");
+                    Client client = new Client(idc, firstname, lastname, date);
+                    clientList.add(client);
+                }
+                conn.close();
+            } catch(SQLException ex) {
+                System.out.println("getListOfAllClients error: "+ex.toString());
+            }
+        }
+        return clientList;
     }
 }
