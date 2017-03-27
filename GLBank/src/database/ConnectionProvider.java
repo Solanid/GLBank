@@ -201,11 +201,19 @@ public class ConnectionProvider {
         }
         return false;
     }
-   /* 
-    public void insertNewClient(Client client) {
-        
+   
+    public void insertNewClient(Client client, String password) {
+        Connection conn = getConnection();
+        if (insertIntoClients(client, conn)) {
+            int idc = getClientIdc(client, conn);
+            if (idc>0) {
+                client.setIdc(idc);
+                insertNewClientDetails(client, conn);
+                insertNewLoginClient(client, password, conn);
+            }
+        }
     }
-    *//*
+    
     public boolean insertIntoClients(Client client, Connection conn) {
         String query = "INSERT INTO clients(firstname, lastname) VALUES(?, ?)";
         if (conn!=null) {
@@ -213,20 +221,67 @@ public class ConnectionProvider {
                 ps.setString(1, client.getFirstname());
                 ps.setString(2, client.getLastname());
                 int x = ps.executeUpdate();
-                if (x==1) {
-                    return true;
-                }
-                else
-                    return false;
+                return x==1?true:false;
             } catch(SQLException ex) {
                 System.out.println("insertIntoClients error: "+ex.toString());
             }
         }
         return false;
     }
-  /*     
-    public int getClientIds(Client client){
-        
-    }*/
+    
+    public boolean insertNewClientDetails(Client client, Connection conn) {
+        String query = "INSERT INTO ClientDetails(idc, street, housenumber, postcode, dob, email, city)"+
+                " VALUES (?, ?, ?, ?, ?, ?, ?)";
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, client.getIdc());
+                ps.setString(2, client.getStreet());
+                ps.setInt(3, client.getHousenumber());
+                ps.setString(4, client.getPostcode());
+                ps.setString(5, client.getStringDob());
+                ps.setString(6, client.getEmail());
+                ps.setString(7, client.getCity());
+                int x = ps.executeUpdate();
+                return x==1?true:false;
+            } catch(SQLException ex) {
+                System.out.println("insertNewClientDetails error: "+ex.toString());
+            }
+        }
+        return false;
+    }
+    
+    public boolean insertNewLoginClient(Client client, String password, Connection conn) {
+        String query = "INSERT INTO LoginClient(idc, login, password) VALUES(?, ?, ?)";
+        if (conn!=null) {
+            try(PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, client.getIdc());
+                ps.setString(2, client.getUsername());
+                ps.setString(3, password);
+                int x = ps.executeUpdate();
+                return x==0?true:false;
+            } catch(SQLException ex) {
+                System.out.println("insertNewLoginClient error: "+ex.toString());
+            }
+        }
+        return false;
+    }
+    
+    public int getClientIdc(Client client, Connection conn){
+        String query = "SELECT max(idc) AS idc FROM clients WHERE firstname LIKE ? AND lastname LIKE ?";
+        int id = -1;
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, client.getFirstname());
+                ps.setString(2, client.getLastname());
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    id=rs.getInt("idc");
+                }
+            } catch(SQLException ex) {
+                System.out.println("getClientIds error: "+ex.toString());
+            }
+        }
+        return id;
+    }
     
 }

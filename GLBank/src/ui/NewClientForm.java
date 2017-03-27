@@ -249,15 +249,15 @@ public class NewClientForm extends javax.swing.JDialog {
     //    System.out.println(datum);
         
         String street = txtStreet.getText().trim();
-        String txtNum = txtNumber.getText().trim();
-        int houseNumber = 0;
-        boolean isNumeric = txtNum.chars().allMatch(Character::isDigit);
-        if (isNumeric) {
-            houseNumber = Integer.parseInt(txtNumber.getText().trim(), 10);
-        } else {
-            houseNumber = 0;
-        }
-        System.out.println(houseNumber);
+        String numString=txtNumber.getText().trim();
+        
+        if(numString.equals(""))
+            numString="0";
+        boolean isNumeric = numString.chars().allMatch( Character::isDigit );
+        int num;
+        if(isNumeric) num=Integer.parseInt(numString); else num = 0;
+        
+        
         
         String city = txtCity.getText().trim();
         String postCode = txtPostcode.getText().trim();
@@ -289,7 +289,7 @@ public class NewClientForm extends javax.swing.JDialog {
             lblErrorMessage.setVisible(true);      
             return;
         }
-        if (houseNumber==0) {
+        if (num==0) {
             lblErrorMessage.setText("Please enter house number!");
             lblErrorMessage.setVisible(true);      
             return;
@@ -320,7 +320,7 @@ public class NewClientForm extends javax.swing.JDialog {
             return;            
         }
         if (!isPasswordValid(password)) {
-            lblErrorMessage.setText("Password must contain at last one upper, lower case letter, digit,special char and be longer than 6.");
+            lblErrorMessage.setText("Password must contains ... and be longer than 6.");
             lblErrorMessage.setVisible(true); 
             return;             
         }
@@ -329,8 +329,9 @@ public class NewClientForm extends javax.swing.JDialog {
             lblErrorMessage.setVisible(true);
         }
         else {
-            //Client newClient = new Client(firstName, lastName, email, street, houseNumber, city, postCode, login, dob);
-            lblErrorMessage.setVisible(false);            
+            Client newClient = new Client(firstName, lastName, email, street, num, city, postCode, login, dob);
+            new ConnectionProvider().insertNewClient(newClient, password);
+            this.dispose();
         }
 
     }//GEN-LAST:event_btnConfirmActionPerformed

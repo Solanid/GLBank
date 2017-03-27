@@ -12,7 +12,7 @@ import java.util.Date;
  * @author Solanid
  */
 public class Client {
-    private int idemp;
+    private int idc;
     private String firstname;
     private String lastname;
     private String email;
@@ -27,7 +27,7 @@ public class Client {
     private boolean blocked;
 
     public Client(int idemp, String firstname, String lastname, String email, String street, int housenumber, String city, String postcode, String username, Date dob, boolean disable, boolean blocked) {
-        this.idemp = idemp;
+        this.idc = idemp;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -43,7 +43,7 @@ public class Client {
     }
 
     public Client(int idemp, String firstname, String lastname, Date dob) {
-        this.idemp = idemp;
+        this.idc = idemp;
         this.firstname = firstname;
         this.lastname = lastname;
         this.dob = dob;
@@ -64,7 +64,7 @@ public class Client {
         this.username = username;
         this.stringDob = stringDob;
         this.dob = dob;
-        this.idemp = ' ';
+        this.idc = ' ';
         this.disable=this.blocked=false;
     }
 
@@ -73,8 +73,8 @@ public class Client {
         return city;
     }
     
-    public int getIdemp() {
-        return idemp;
+    public int getIdc() {
+        return idc;
     }
 
     public String getFirstname() {
@@ -117,7 +117,13 @@ public class Client {
         return blocked;
     }
 
-    
+    public void setIdc(int idc) {
+        this.idc = idc;
+    }
+
+    public String getStringDob() {
+        return stringDob;
+    }
     
 }
 
