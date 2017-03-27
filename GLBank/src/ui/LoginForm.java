@@ -129,9 +129,9 @@ public class LoginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLoginActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String login = txtLogin.getText();
+        String login = txtLogin.getText().trim();
         char[] pass = txtPassword.getPassword();
-        String password = new String(txtPassword.getPassword());
+        String password = new String(txtPassword.getPassword()).trim();
         if (!login.equals(" ") && password.length()>=3) {
             ConnectionProvider conn=new ConnectionProvider();
             if (conn.isEmployeePasswordValid(login, password)) {

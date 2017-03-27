@@ -5,8 +5,11 @@
         <group>
             <file>file:/D:/Skola/GLBank/GLBank/test/database/ConnectionProviderTest.java</file>
             <file>file:/D:/Skola/GLBank/GLBank/src/ui/MainForm.java</file>
+            <file>file:/D:/Skola/GLBank/GLBank/src/ui/NewClientForm.java</file>
             <file>file:/D:/Skola/GLBank/GLBank/src/ui/ChangePasswordForm.java</file>
+            <file>file:/D:/Skola/GLBank/GLBank/src/glbank/Client.java</file>
             <file>file:/D:/Skola/GLBank/GLBank/src/database/ConnectionProvider.java</file>
+            <file>file:/D:/Skola/GLBank/GLBank/src/glbank/Employee.java</file>
             <file>file:/D:/Skola/GLBank/GLBank/src/ui/LoginForm.java</file>
         </group>
     </open-files>

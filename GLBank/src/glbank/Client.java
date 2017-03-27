@@ -22,6 +22,7 @@ public class Client {
     private String postcode;
     private String username;
     private Date dob;
+    private String stringDob;
     private boolean disable;
     private boolean blocked;
 
@@ -36,6 +37,7 @@ public class Client {
         this.postcode = postcode;
         this.username = username;
         this.dob = dob;
+        this.stringDob = null;
         this.disable = disable;
         this.blocked = blocked;
     }
@@ -45,11 +47,28 @@ public class Client {
         this.firstname = firstname;
         this.lastname = lastname;
         this.dob = dob;
+        this.stringDob = null;
         this.email=this.street=this.postcode=this.username=this.city=null;
         this.housenumber=0;
         this.disable=this.blocked=false;
     }
 
+    public Client(String firstname, String lastname, String email, String street, int housenumber, String city, String postcode, String username, String stringDob) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.street = street;
+        this.housenumber = housenumber;
+        this.city = city;
+        this.postcode = postcode;
+        this.username = username;
+        this.stringDob = stringDob;
+        this.dob = dob;
+        this.idemp = ' ';
+        this.disable=this.blocked=false;
+    }
+
+    
     public String getCity() {
         return city;
     }

@@ -5,6 +5,10 @@
  */
 package ui;
 
+import database.ConnectionProvider;
+import glbank.Client;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Solanid
@@ -17,6 +21,9 @@ public class NewClientForm extends javax.swing.JDialog {
     public NewClientForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        dateDateOfBirth.setDateFormat(sdf);
+        lblErrorMessage.setVisible(false);
     }
 
     /**
@@ -46,12 +53,13 @@ public class NewClientForm extends javax.swing.JDialog {
         txtCity = new javax.swing.JTextField();
         txtPostcode = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        txtDateOfBirth = new javax.swing.JTextField();
         txtLogin = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnConfirm = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
+        lblErrorMessage = new javax.swing.JLabel();
+        dateDateOfBirth = new datechooser.beans.DateChooserCombo();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -75,35 +83,41 @@ public class NewClientForm extends javax.swing.JDialog {
 
         jLabel10.setText("Password:");
 
-        jButton1.setText("Confirm");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnConfirm.setText("Confirm");
+        btnConfirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnConfirmActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCancelActionPerformed(evt);
             }
         });
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel11.setText("New Client");
 
+        lblErrorMessage.setForeground(new java.awt.Color(255, 51, 51));
+        lblErrorMessage.setText("Username is already used!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(243, Short.MAX_VALUE)
+                .addComponent(jLabel11)
+                .addGap(232, 232, 232))
             .addGroup(layout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnCancel)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnConfirm))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -117,9 +131,9 @@ public class NewClientForm extends javax.swing.JDialog {
                                     .addComponent(jLabel9))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtCity, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                    .addComponent(txtCity)
                                     .addComponent(txtStreet)
-                                    .addComponent(txtLogin)))
+                                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel2)
@@ -127,31 +141,31 @@ public class NewClientForm extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtLastName)
-                                    .addComponent(txtEmail))))
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblErrorMessage))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtPostcode, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel10)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txtPostcode, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtDateOfBirth)))
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(58, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel11)
-                .addGap(232, 232, 232))
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dateDateOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(21, 21, 21))
+                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,19 +173,21 @@ public class NewClientForm extends javax.swing.JDialog {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7)
-                    .addComponent(txtDateOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7)))
+                    .addComponent(dateDateOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -190,30 +206,145 @@ public class NewClientForm extends javax.swing.JDialog {
                     .addComponent(jLabel10)
                     .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblErrorMessage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addComponent(btnConfirm)
+                    .addComponent(btnCancel))
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String firstName = txtFirstName.getText().trim();
+        String lastName = txtLastName.getText().trim();
+        String email = txtEmail.getText().trim();
+        String dob =  dateDateOfBirth.getText();
+        //Date dobb = dateDateOfBirth.getSelectedDate().getTime();
+    /*    System.out.println(dob);
+        String[] date = new String[3]; 
+        date[0] = dob.split("\\.")[0];
+        date[1] = dob.split("\\.")[1];
+        date[2] = dob.split("\\.")[2];
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = null;
+        Date datee;
+         try {
+            startDate = df.parse(new String(date[0]+"-"+date[1]+"-"+date[2]));
+            String newDateString = df.format(startDate);
+            System.out.println(startDate);
+            datee = df.format(startDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }*/
+    
+       // Date datum = sdf.parse(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+   //     String datum = sdf.format(new String(date[0]+"-"+date[1]+"-"+date[2]));
+    //    System.out.println(datum);
+        
+        String street = txtStreet.getText().trim();
+        String txtNum = txtNumber.getText().trim();
+        int houseNumber = 0;
+        boolean isNumeric = txtNum.chars().allMatch(Character::isDigit);
+        if (isNumeric) {
+            houseNumber = Integer.parseInt(txtNumber.getText().trim(), 10);
+        } else {
+            houseNumber = 0;
+        }
+        System.out.println(houseNumber);
+        
+        String city = txtCity.getText().trim();
+        String postCode = txtPostcode.getText().trim();
+        String login = txtLogin.getText().trim();
+        String password = txtPassword.getText().trim();
+        
+        if (firstName.length()==0) {
+            lblErrorMessage.setText("Please enter firstname!");
+            lblErrorMessage.setVisible(true);
+            return;
+        }
+        if (lastName.length()==0) {
+            lblErrorMessage.setText("Please enter lastname!");
+            lblErrorMessage.setVisible(true);   
+            return;
+        }
+        if (email.length()==0) {
+            lblErrorMessage.setText("Please enter email!");
+            lblErrorMessage.setVisible(true);   
+            return;            
+        }
+        if (dob.length()==0) {
+            lblErrorMessage.setText("Please enter date!");
+            lblErrorMessage.setVisible(true); 
+            return;
+        }
+        if (street.length()==0) {
+            lblErrorMessage.setText("Please enter Street!");
+            lblErrorMessage.setVisible(true);      
+            return;
+        }
+        if (houseNumber==0) {
+            lblErrorMessage.setText("Please enter house number!");
+            lblErrorMessage.setVisible(true);      
+            return;
+        }       
+        if (city.length()==0) {
+            lblErrorMessage.setText("Please enter house City!");
+            lblErrorMessage.setVisible(true);      
+            return;
+        }     
+        if (postCode.length()==0) {
+            lblErrorMessage.setText("Please enter post code!");
+            lblErrorMessage.setVisible(true);      
+            return;
+        }             
+        if (login.length()==0) {
+            lblErrorMessage.setText("Please enter Login!");
+            lblErrorMessage.setVisible(true);     
+            return;
+        }
+        if (login.length()<3) {
+            lblErrorMessage.setText("Login must be > 3!");
+            lblErrorMessage.setVisible(true);  
+            return;
+        }
+        if (new ConnectionProvider().isUsernameAlreadyUsed(login)) {
+            lblErrorMessage.setText("Login "+login+" already exists!");
+            lblErrorMessage.setVisible(true); 
+            return;            
+        }
+        if (!isPasswordValid(password)) {
+            lblErrorMessage.setText("Password must contain at last one upper, lower case letter, digit,special char and be longer than 6.");
+            lblErrorMessage.setVisible(true); 
+            return;             
+        }
+        if (password.length()==0) {
+            lblErrorMessage.setText("Please enter password!");
+            lblErrorMessage.setVisible(true);
+        }
+        else {
+            //Client newClient = new Client(firstName, lastName, email, street, houseNumber, city, postCode, login, dob);
+            lblErrorMessage.setVisible(false);            
+        }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnConfirmActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnConfirm;
+    private datechooser.beans.DateChooserCombo dateDateOfBirth;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -225,9 +356,9 @@ public class NewClientForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lblErrorMessage;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JTextField txtCity;
-    private javax.swing.JTextField txtDateOfBirth;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;
@@ -237,4 +368,27 @@ public class NewClientForm extends javax.swing.JDialog {
     private javax.swing.JTextField txtPostcode;
     private javax.swing.JTextField txtStreet;
     // End of variables declaration//GEN-END:variables
+
+    private boolean isPasswordValid(String newPassword) {
+        newPassword = newPassword.trim();
+        if (newPassword.length()<6) {
+            return false;
+        }
+        boolean lowLetter = false;
+        boolean uppLetter = false;
+        boolean digit = false;
+        boolean nonAlphaNum = false;
+        for (int i = 0; i < newPassword.length(); i++) {
+            if (Character.isLowerCase(newPassword.charAt(i)))
+                lowLetter = true;
+            if (Character.isUpperCase(newPassword.charAt(i)))
+                uppLetter = true;
+            if (Character.isDigit(newPassword.charAt(i)))
+                digit = true;
+            if (!Character.isLetter(newPassword.charAt(i)) && !Character.isDigit(newPassword.charAt(i)))
+                nonAlphaNum = true;
+        }
+        return lowLetter && uppLetter && digit && nonAlphaNum;
+    }    
+
 }

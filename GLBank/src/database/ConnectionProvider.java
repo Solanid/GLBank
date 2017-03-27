@@ -186,4 +186,47 @@ public class ConnectionProvider {
         }
         return clientList;
     }
+    
+    public boolean isUsernameAlreadyUsed(String username) {
+        String querry = "SELECT * FROM LoginClient WHERE login LIKE ?";
+        Connection conn = getConnection();
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(querry)){
+                ps.setString(1, username);
+                ResultSet rs = ps.executeQuery();
+                return rs.next()?true:false;
+            } catch(SQLException ex) {
+                System.out.println("isUsernameAlreadyUsed error: "+ex.toString());                
+            }
+        }
+        return false;
+    }
+   /* 
+    public void insertNewClient(Client client) {
+        
+    }
+    *//*
+    public boolean insertIntoClients(Client client, Connection conn) {
+        String query = "INSERT INTO clients(firstname, lastname) VALUES(?, ?)";
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, client.getFirstname());
+                ps.setString(2, client.getLastname());
+                int x = ps.executeUpdate();
+                if (x==1) {
+                    return true;
+                }
+                else
+                    return false;
+            } catch(SQLException ex) {
+                System.out.println("insertIntoClients error: "+ex.toString());
+            }
+        }
+        return false;
+    }
+  /*     
+    public int getClientIds(Client client){
+        
+    }*/
+    
 }
