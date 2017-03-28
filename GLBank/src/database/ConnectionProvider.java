@@ -187,6 +187,40 @@ public class ConnectionProvider {
         return clientList;
     }
     
+    public Client getClientDetails(int idc) {
+        String query = "SELECT * FROM clients "+
+                "INNER JOIN clientdetails ON clients.idc=clientdetails.idc "+
+                "INNER JOIN loginclient ON clients.idc=loginclient.idc "+
+                "WHERE clients.idc LIKE ?";
+        Connection conn = getConnection();
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, idc);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    String firstname = rs.getString("firstname");
+                    String lastname = rs.getString("lastname");
+                    String street = rs.getString("street");
+                    int houseNumber = rs.getInt("housenumber");
+                    String postcode = rs.getString("postcode");
+                    String city = rs.getString("city");
+                    String email = rs.getString("email");
+                    Date dob = rs.getDate("dob");
+                    String username = rs.getString("login");
+                    boolean disable = /*rs.getString("disable").charAt(0)=='T';*/ false;
+                    boolean blocked = /*rs.getString("blocked").charAt(0)=='T';*/ false;
+                    Client newClient = new Client(idc, firstname, lastname, email, street, houseNumber, city, postcode, username, dob, disable, blocked);
+                    conn.close();
+                    return newClient;
+                }
+                conn.close();
+            } catch(SQLException ex) {
+                System.out.println("getClientDetails error: "+ex.toString());
+            }
+        }
+        return null;
+    }
+    
     public boolean isUsernameAlreadyUsed(String username) {
         String querry = "SELECT * FROM LoginClient WHERE login LIKE ?";
         Connection conn = getConnection();

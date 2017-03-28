@@ -83,6 +83,18 @@ public class NewClientForm extends javax.swing.JDialog {
 
         jLabel10.setText("Password:");
 
+        txtNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumberKeyReleased(evt);
+            }
+        });
+
+        txtPostcode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPostcodeKeyReleased(evt);
+            }
+        });
+
         btnConfirm.setText("Confirm");
         btnConfirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -340,6 +352,22 @@ public class NewClientForm extends javax.swing.JDialog {
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void txtNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumberKeyReleased
+        // TODO add your handling code here:
+        String numString=txtNumber.getText().trim();
+        boolean isNumeric = numString.chars().allMatch( Character::isDigit );
+        if (!isNumeric)
+            txtNumber.setText("");
+    }//GEN-LAST:event_txtNumberKeyReleased
+
+    private void txtPostcodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPostcodeKeyReleased
+        // TODO add your handling code here:
+        String postcode=txtPostcode.getText().trim();
+        boolean isNumeric = postcode.chars().allMatch( Character::isDigit );
+        if (!isNumeric)
+            txtPostcode.setText("");
+    }//GEN-LAST:event_txtPostcodeKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

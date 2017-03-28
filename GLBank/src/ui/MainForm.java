@@ -16,6 +16,8 @@ import java.util.List;
  */
 public class MainForm extends javax.swing.JFrame {
     private int idemp;
+    private List<Client> list;
+    
     private ConnectionProvider conn;
     
     
@@ -32,6 +34,7 @@ public class MainForm extends javax.swing.JFrame {
     private void initForm() {
         printEmployeeName();
         showListOfClients();
+        initTabs();
     }
     
     private void printEmployeeName() {
@@ -51,19 +54,23 @@ public class MainForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
         lblEmployeeName = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         comboListOfAllClients = new javax.swing.JComboBox<>();
         jSeparator2 = new javax.swing.JSeparator();
         btnNewClient = new javax.swing.JButton();
+        jTabbedPanel = new javax.swing.JTabbedPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         menuChangePassword = new javax.swing.JMenuItem();
         menuExit = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        menuAbout = new javax.swing.JMenu();
 
         jMenu1.setText("jMenu1");
+
+        jMenu3.setText("jMenu3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,8 +114,13 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("About");
-        jMenuBar1.add(jMenu3);
+        menuAbout.setText("About");
+        menuAbout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuAboutMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuAbout);
 
         setJMenuBar(jMenuBar1);
 
@@ -119,6 +131,7 @@ public class MainForm extends javax.swing.JFrame {
             .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -128,9 +141,11 @@ public class MainForm extends javax.swing.JFrame {
                                 .addGap(16, 16, 16)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboListOfAllClients, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 487, Short.MAX_VALUE))
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addComponent(comboListOfAllClients, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 759, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 16, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
@@ -148,7 +163,9 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(comboListOfAllClients, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 328, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jTabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnNewClient)
@@ -173,6 +190,14 @@ public class MainForm extends javax.swing.JFrame {
 
     private void comboListOfAllClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboListOfAllClientsActionPerformed
         // TODO add your handling code here:
+        int index = comboListOfAllClients.getSelectedIndex();
+        jTabbedPanel.removeAll();
+        if (index>0) {
+            Client client = list.get(index-1);
+            Client newClient = new ConnectionProvider().getClientDetails(client.getIdc());
+            PanelInfo panelInfo = new PanelInfo(newClient);
+            jTabbedPanel.add("Information", panelInfo);
+        }
     }//GEN-LAST:event_comboListOfAllClientsActionPerformed
 
     private void btnNewClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewClientActionPerformed
@@ -180,6 +205,13 @@ public class MainForm extends javax.swing.JFrame {
         newClientForm.setLocationRelativeTo(null);
         newClientForm.setVisible(true);
     }//GEN-LAST:event_btnNewClientActionPerformed
+
+    private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
+        // TODO add your handling code here:
+        AboutForm aboutForm = new AboutForm(this, true);
+        aboutForm.setLocationRelativeTo(null);
+        aboutForm.setVisible(true);
+    }//GEN-LAST:event_menuAboutMouseClicked
 
     /**
      * @param args the command line arguments
@@ -195,18 +227,24 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTabbedPane jTabbedPanel;
     private javax.swing.JLabel lblEmployeeName;
+    private javax.swing.JMenu menuAbout;
     private javax.swing.JMenuItem menuChangePassword;
     private javax.swing.JMenuItem menuExit;
     // End of variables declaration//GEN-END:variables
 
     private void showListOfClients() {
-        List<Client> list = new ConnectionProvider().getListOfAllClients();
+        list = new ConnectionProvider().getListOfAllClients();
         if (list!=null && list.size()>0) {
             for (Client c:list) {
                 String item = c.getLastname()+" "+c.getFirstname()+"  ("+c.getDob()+") ";
                 comboListOfAllClients.addItem(item);
             }
         }
+    }
+
+    private void initTabs() {
+        
     }
 }
