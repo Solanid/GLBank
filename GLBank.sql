@@ -76,3 +76,18 @@ INSERT INTO Clients VALUES(3, 'Chuck', 'Norris', 'ch.norris@gmail.com');
 INSERT INTO ClientDetails VALUES(1 ,1 ,'janko', 'hrasko');
 INSERT INTO ClientDetails VALUES(2 ,2 , 'anicka', 'dusicka');
 INSERT INTO ClientDetails VALUES(3 ,3 , 'chuck', 'norris');
+
+CREATE TABLE Accounts(
+	idacc BIGINT unique,
+	idc INTEGER NOT NULL,
+	balance FLOAT(10,2),
+	PRIMARY KEY (idacc),
+	FOREIGN KEY (idc)
+		REFERENCES Client(idc)
+		ON DELETE CASCADE ON UPDATE RESTRICT
+);
+
+INSERT INTO Accounts VALUES (4561232588,1,50.20);
+INSERT INTO Accounts VALUES (9401953275,1,1250.15);
+INSERT INTO Accounts VALUES (28161353,1,98555.33);
+INSERT INTO Accounts VALUES (1111886952,2,4521.84);

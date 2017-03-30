@@ -5,6 +5,7 @@
  */
 package database;
 
+import glbank.Account;
 import glbank.Client;
 import glbank.Employee;
 import java.sql.Connection;
@@ -316,6 +317,29 @@ public class ConnectionProvider {
             }
         }
         return id;
+    }
+    
+    public List<Account> getListOfAccountsByIdc(int idc) {
+        String query = "SELECT * FROM accounts WHERE idc LIKE ?";
+        Connection conn = getConnection();
+        List<Account> accountList = new ArrayList<>();
+        if (conn!=null) {
+            try(PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, idc);
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()) {
+                    long idacc = rs.getLong("idacc");
+                    float balance = rs.getFloat("balance");
+                    Date date = rs.getDate("dob");
+                    Account account = new Account(idacc, idc, balance);
+                    accountList.add(account);
+                }
+                conn.close();
+            } catch(SQLException ex) {
+                System.out.println("getListOfAccountsByIdc error: "+ex.toString());
+            }
+        }
+        return accountList;
     }
     
 }
