@@ -11,7 +11,11 @@ import ui.panels.PanelInfo;
 import database.ConnectionProvider;
 import glbank.Client;
 import glbank.Employee;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ui.panels.PanelCards;
 
 /**
@@ -214,6 +218,14 @@ public class MainForm extends javax.swing.JFrame {
         NewClientForm newClientForm = new NewClientForm(this, true);
         newClientForm.setLocationRelativeTo(null);
         newClientForm.setVisible(true);
+        
+        //update listu
+        newClientForm.addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosed(WindowEvent e) {
+            initForm();
+        }
+    });
     }//GEN-LAST:event_btnNewClientActionPerformed
 
     private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
@@ -226,6 +238,7 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNewClient;
@@ -245,6 +258,8 @@ public class MainForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void showListOfClients() {
+        comboListOfAllClients.removeAllItems();
+        comboListOfAllClients.addItem("choose client");
         list = new ConnectionProvider().getListOfAllClients();
         if (list!=null && list.size()>0) {
             for (Client c:list) {

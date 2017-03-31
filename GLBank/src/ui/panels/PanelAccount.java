@@ -5,22 +5,46 @@
  */
 package ui.panels;
 
+import database.ConnectionProvider;
+import glbank.Account;
+import java.util.List;
+import java.util.Random;
+
 /**
  *
  * @author Solanid
  */
 public class PanelAccount extends javax.swing.JPanel {
     private int idc;
+    private List<Account> accList= null;
+    Account account = null;
     /**
      * Creates new form PanelAccount
      */
     public PanelAccount(int idc) {
         initComponents();
         this.idc=idc;
+        initAccountList();
     }
     
     private void initAccountList() {
-        
+        showListOfAllAccounts();
+        lblBalance.setText("");
+        if (accList.isEmpty()) {
+            return;
+        }
+        account = accList.get(0);
+        lblBalance.setText(account.getBalance()+"");
+    }
+    
+    private void showListOfAllAccounts() {
+        comboListIdAcc.removeAllItems();
+        accList = new ConnectionProvider().getListOfAccountsByIdc(idc);
+        if (accList!=null && accList.size()>0) {
+            accList.forEach((acc) -> {
+                comboListIdAcc.addItem(acc.getIdacc()+" / 2701");
+            });
+        }
     }
 
     /**
@@ -37,18 +61,58 @@ public class PanelAccount extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         lblBalance = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtAddAmount = new javax.swing.JTextField();
+        txtSubAmount = new javax.swing.JTextField();
+        btnAddMoney = new javax.swing.JButton();
+        btnSubstractMoney = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        jSeparator1 = new javax.swing.JSeparator();
+        btnNewAccount = new javax.swing.JButton();
 
         jLabel1.setText("Bank account:");
+
+        comboListIdAcc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboListIdAccActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Balance:");
 
         lblBalance.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lblBalance.setText("1235.45");
+        lblBalance.setText("0");
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("Cash transactions:");
 
-        jTextField1.setText("jTextField1");
+        txtAddAmount.setText("0");
+        txtAddAmount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAddAmountKeyReleased(evt);
+            }
+        });
+
+        txtSubAmount.setText("0");
+
+        btnAddMoney.setText("Add +");
+        btnAddMoney.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddMoneyActionPerformed(evt);
+            }
+        });
+
+        btnSubstractMoney.setText("Sub -");
+        btnSubstractMoney.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubstractMoneyActionPerformed(evt);
+            }
+        });
+
+        btnNewAccount.setText("New Account");
+        btnNewAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewAccountActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -58,18 +122,39 @@ public class PanelAccount extends javax.swing.JPanel {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(btnNewAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboListIdAcc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
-                .addGap(67, 67, 67)
-                .addComponent(jLabel3)
-                .addContainerGap(137, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(199, 199, 199))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 18, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btnAddMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnSubstractMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txtAddAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(txtSubAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(15, 15, 15))
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(23, 23, 23))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(153, 153, 153))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(comboListIdAcc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,28 +163,96 @@ public class PanelAccount extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(comboListIdAcc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(lblBalance)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel3)))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblBalance)
+                    .addComponent(jLabel3))
+                .addGap(14, 14, 14)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAddAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSubAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddMoney)
+                    .addComponent(btnSubstractMoney)
+                    .addComponent(btnNewAccount))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void comboListIdAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboListIdAccActionPerformed
+        // TODO add your handling code here:
+        int index = comboListIdAcc.getSelectedIndex();
+        if (index>0) {
+            account = accList.get(index);
+            lblBalance.setText(account.getBalance()+"");
+        }
+    }//GEN-LAST:event_comboListIdAccActionPerformed
+
+    private void btnAddMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMoneyActionPerformed
+        // TODO add your handling code here:
+        String amountString = txtAddAmount.getText().trim();
+        
+        if(amountString.equals(""))
+            amountString="0";
+        float num;
+        num=Float.parseFloat(amountString);
+        // spoplatnit prevod 1e
+        if(num>=0.10) {
+            System.out.println(num);
+        }
+    }//GEN-LAST:event_btnAddMoneyActionPerformed
+
+    private void btnSubstractMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubstractMoneyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSubstractMoneyActionPerformed
+
+    private void btnNewAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewAccountActionPerformed
+        // TODO add your handling code here:
+        if (new ConnectionProvider().addNewAccount(idc, generateRandomAccount())) {
+            System.out.println("Success");
+        }
+        initAccountList();
+    }//GEN-LAST:event_btnNewAccountActionPerformed
+
+    private void txtAddAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAddAmountKeyReleased
+        // TODO add your handling code here:
+        String amountString=txtAddAmount.getText().trim();
+        amountString = amountString.replaceAll(" ", "");
+    /*    boolean isNumeric = postcode.chars().allMatch( Character::isDigit );
+        if (!isNumeric)
+            txtAddAmount.;*/
+        float amount = Float.parseFloat(amountString);
+        System.out.println(amount);
+    }//GEN-LAST:event_txtAddAmountKeyReleased
+
+    private long generateRandomAccount() {
+        ConnectionProvider conn = new ConnectionProvider();
+        long proposalAccount = 0;
+        do {
+            proposalAccount = Math.abs(new Random().nextLong()%900000000)*11;
+        } while (conn.isAccountAlreadyUsed(proposalAccount));
+        return proposalAccount;
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddMoney;
+    private javax.swing.JButton btnNewAccount;
+    private javax.swing.JButton btnSubstractMoney;
     private javax.swing.JComboBox<String> comboListIdAcc;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblBalance;
+    private javax.swing.JTextField txtAddAmount;
+    private javax.swing.JTextField txtSubAmount;
     // End of variables declaration//GEN-END:variables
 }

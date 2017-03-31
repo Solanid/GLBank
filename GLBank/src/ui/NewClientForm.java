@@ -332,8 +332,8 @@ public class NewClientForm extends javax.swing.JDialog {
             return;            
         }
         if (!isPasswordValid(password)) {
-            lblErrorMessage.setText("Password must contains ... and be longer than 6.");
-            lblErrorMessage.setVisible(true); 
+            lblErrorMessage.setText("Bad password form!");
+            lblErrorMessage.setVisible(true);
             return;             
         }
         if (password.length()==0) {

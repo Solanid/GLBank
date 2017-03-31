@@ -229,7 +229,7 @@ public class ConnectionProvider {
             try (PreparedStatement ps = conn.prepareStatement(querry)){
                 ps.setString(1, username);
                 ResultSet rs = ps.executeQuery();
-                return rs.next()?true:false;
+                return rs.next();
             } catch(SQLException ex) {
                 System.out.println("isUsernameAlreadyUsed error: "+ex.toString());                
             }
@@ -256,7 +256,7 @@ public class ConnectionProvider {
                 ps.setString(1, client.getFirstname());
                 ps.setString(2, client.getLastname());
                 int x = ps.executeUpdate();
-                return x==1?true:false;
+                return x==1;
             } catch(SQLException ex) {
                 System.out.println("insertIntoClients error: "+ex.toString());
             }
@@ -277,7 +277,7 @@ public class ConnectionProvider {
                 ps.setString(6, client.getEmail());
                 ps.setString(7, client.getCity());
                 int x = ps.executeUpdate();
-                return x==1?true:false;
+                return x==1;
             } catch(SQLException ex) {
                 System.out.println("insertNewClientDetails error: "+ex.toString());
             }
@@ -293,7 +293,7 @@ public class ConnectionProvider {
                 ps.setString(2, client.getUsername());
                 ps.setString(3, password);
                 int x = ps.executeUpdate();
-                return x==0?true:false;
+                return x==0;
             } catch(SQLException ex) {
                 System.out.println("insertNewLoginClient error: "+ex.toString());
             }
@@ -330,7 +330,6 @@ public class ConnectionProvider {
                 while(rs.next()) {
                     long idacc = rs.getLong("idacc");
                     float balance = rs.getFloat("balance");
-                    Date date = rs.getDate("dob");
                     Account account = new Account(idacc, idc, balance);
                     accountList.add(account);
                 }
@@ -340,6 +339,56 @@ public class ConnectionProvider {
             }
         }
         return accountList;
+    }
+    
+    public boolean isAccountAlreadyUsed(long proposalAccount) {
+        String querry = "SELECT * FROM Accounts WHERE idacc LIKE ?";
+        Connection conn = getConnection();
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(querry)){
+                ps.setLong(1, proposalAccount);
+                ResultSet rs = ps.executeQuery();
+                return rs.next();
+            } catch(SQLException ex) {
+                System.out.println("isAccountAlreadyUsed error: "+ex.toString());                
+            }
+        }
+        return false;
+    }
+    
+    public boolean updateAccountBalance(float amount, Account account) {
+        String query = "UPDATE Accounts SET Balance=? WHERE idacc LIKE ?";
+        Connection conn = getConnection();
+        if (conn!=null) { 
+            try(PreparedStatement ps = conn.prepareStatement(query)) {
+                float balance = account.getBalance();
+                balance+=amount;
+                ps.setFloat(1, balance);
+                int x = ps.executeUpdate();
+                conn.close();
+                return x==1;
+            } catch(SQLException ex) {
+                System.out.println("updateAccountBalance error: "+ex.toString());
+            }
+        }
+        return false;
+    }
+    
+    public boolean addNewAccount(int idc, long idacc) {
+        String query = "INSERT INTO Accounts VALUES(?, ?, 0)";
+        Connection conn = getConnection();
+        if (conn!=null) {
+            try(PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setLong(1, idacc);
+                ps.setInt(2, idc);
+                int x = ps.executeUpdate();               
+                conn.close();
+                return x==1;
+            } catch(SQLException ex) {
+                System.out.println("addNewAccount error: "+ex.toString());
+            }
+        }
+        return false;
     }
     
 }
