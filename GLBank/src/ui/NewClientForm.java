@@ -7,6 +7,7 @@ package ui;
 
 import database.ConnectionProvider;
 import glbank.Client;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 
 /**
@@ -84,14 +85,14 @@ public class NewClientForm extends javax.swing.JDialog {
         jLabel10.setText("Password:");
 
         txtNumber.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtNumberKeyReleased(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumberKeyTyped(evt);
             }
         });
 
         txtPostcode.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPostcodeKeyReleased(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPostcodeKeyTyped(evt);
             }
         });
 
@@ -257,8 +258,8 @@ public class NewClientForm extends javax.swing.JDialog {
         }*/
     
        // Date datum = sdf.parse(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
-   //     String datum = sdf.format(new String(date[0]+"-"+date[1]+"-"+date[2]));
-    //    System.out.println(datum);
+       // String datum = sdf.format(new String(date[0]+"-"+date[1]+"-"+date[2]));
+       // System.out.println(datum);
         
         String street = txtStreet.getText().trim();
         String numString=txtNumber.getText().trim();
@@ -268,8 +269,6 @@ public class NewClientForm extends javax.swing.JDialog {
         boolean isNumeric = numString.chars().allMatch( Character::isDigit );
         int num;
         if(isNumeric) num=Integer.parseInt(numString); else num = 0;
-        
-        
         
         String city = txtCity.getText().trim();
         String postCode = txtPostcode.getText().trim();
@@ -353,21 +352,21 @@ public class NewClientForm extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void txtNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumberKeyReleased
-        // TODO add your handling code here:
-        String numString=txtNumber.getText().trim();
-        boolean isNumeric = numString.chars().allMatch( Character::isDigit );
-        if (!isNumeric)
-            txtNumber.setText("");
-    }//GEN-LAST:event_txtNumberKeyReleased
+    private void txtNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumberKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }  
+    }//GEN-LAST:event_txtNumberKeyTyped
 
-    private void txtPostcodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPostcodeKeyReleased
-        // TODO add your handling code here:
-        String postcode=txtPostcode.getText().trim();
-        boolean isNumeric = postcode.chars().allMatch( Character::isDigit );
-        if (!isNumeric)
-            txtPostcode.setText("");
-    }//GEN-LAST:event_txtPostcodeKeyReleased
+    private void txtPostcodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPostcodeKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }  
+    }//GEN-LAST:event_txtPostcodeKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -7,6 +7,7 @@ package ui.panels;
 
 import database.ConnectionProvider;
 import glbank.Account;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Random;
 
@@ -89,9 +90,17 @@ public class PanelAccount extends javax.swing.JPanel {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtAddAmountKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAddAmountKeyTyped(evt);
+            }
         });
 
         txtSubAmount.setText("0");
+        txtSubAmount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSubAmountKeyTyped(evt);
+            }
+        });
 
         btnAddMoney.setText("Add +");
         btnAddMoney.addActionListener(new java.awt.event.ActionListener() {
@@ -188,28 +197,27 @@ public class PanelAccount extends javax.swing.JPanel {
     private void comboListIdAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboListIdAccActionPerformed
         // TODO add your handling code here:
         int index = comboListIdAcc.getSelectedIndex();
-        if (index>0) {
+        if (index>=0) {
             account = accList.get(index);
             lblBalance.setText(account.getBalance()+"");
         }
     }//GEN-LAST:event_comboListIdAccActionPerformed
 
     private void btnAddMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMoneyActionPerformed
-        // TODO add your handling code here:
         String amountString = txtAddAmount.getText().trim();
-        
-        if(amountString.equals(""))
-            amountString="0";
-        float num;
-        num=Float.parseFloat(amountString);
-        // spoplatnit prevod 1e
-        if(num>=0.10) {
-            System.out.println(num);
+        float num = Float.parseFloat(amountString);
+        if (num!=0 && num>0.10) {
+            new ConnectionProvider().updateAccountBalance(num, account);
         }
     }//GEN-LAST:event_btnAddMoneyActionPerformed
 
     private void btnSubstractMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubstractMoneyActionPerformed
-        // TODO add your handling code here:
+        String amountString = txtSubAmount.getText().trim();
+        float num = Float.parseFloat(amountString);
+        num*=-1;
+        if (num!=0 && num<0.10) {
+            new ConnectionProvider().updateAccountBalance(num, account);
+        }
     }//GEN-LAST:event_btnSubstractMoneyActionPerformed
 
     private void btnNewAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewAccountActionPerformed
@@ -221,15 +229,30 @@ public class PanelAccount extends javax.swing.JPanel {
     }//GEN-LAST:event_btnNewAccountActionPerformed
 
     private void txtAddAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAddAmountKeyReleased
-        // TODO add your handling code here:
-        String amountString=txtAddAmount.getText().trim();
+ /*        String amountString=txtAddAmount.getText().trim();
         amountString = amountString.replaceAll(" ", "");
-    /*    boolean isNumeric = postcode.chars().allMatch( Character::isDigit );
+      boolean isNumeric = postcode.chars().allMatch( Character::isDigit );
         if (!isNumeric)
-            txtAddAmount.;*/
+            txtAddAmount.;
         float amount = Float.parseFloat(amountString);
-        System.out.println(amount);
+        System.out.println(amount);*/
     }//GEN-LAST:event_txtAddAmountKeyReleased
+
+    private void txtAddAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAddAmountKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || (c==KeyEvent.VK_DELETE) || c=='.')) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAddAmountKeyTyped
+
+    private void txtSubAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSubAmountKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || (c==KeyEvent.VK_DELETE) || c=='.')) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtSubAmountKeyTyped
 
     private long generateRandomAccount() {
         ConnectionProvider conn = new ConnectionProvider();

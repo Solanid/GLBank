@@ -364,6 +364,7 @@ public class ConnectionProvider {
                 float balance = account.getBalance();
                 balance+=amount;
                 ps.setFloat(1, balance);
+                ps.setLong(2, account.getIdacc());
                 int x = ps.executeUpdate();
                 conn.close();
                 return x==1;
