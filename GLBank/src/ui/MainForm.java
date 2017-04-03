@@ -219,13 +219,13 @@ public class MainForm extends javax.swing.JFrame {
         newClientForm.setLocationRelativeTo(null);
         newClientForm.setVisible(true);
         
-        //update listu
+        //update listu po zatvoreni
         newClientForm.addWindowListener(new WindowAdapter() {
-        @Override
-        public void windowClosed(WindowEvent e) {
-            initForm();
-        }
-    });
+            @Override
+            public void windowClosed(WindowEvent e) {
+                initForm();
+            }
+        });
     }//GEN-LAST:event_btnNewClientActionPerformed
 
     private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked

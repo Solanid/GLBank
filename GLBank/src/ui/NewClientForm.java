@@ -417,6 +417,6 @@ public class NewClientForm extends javax.swing.JDialog {
                 nonAlphaNum = true;
         }
         return lowLetter && uppLetter && digit && nonAlphaNum;
-    }    
+    }
 
 }

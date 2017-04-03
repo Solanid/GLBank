@@ -10,6 +10,8 @@ import glbank.Account;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Random;
+import javax.swing.JFrame;
+import ui.NewAccountCreatedDialog;
 
 /**
  *
@@ -208,6 +210,7 @@ public class PanelAccount extends javax.swing.JPanel {
         float num = Float.parseFloat(amountString);
         if (num!=0 && num>0.10) {
             new ConnectionProvider().updateAccountBalance(num, account);
+            initAccountList();
         }
     }//GEN-LAST:event_btnAddMoneyActionPerformed
 
@@ -217,15 +220,19 @@ public class PanelAccount extends javax.swing.JPanel {
         num*=-1;
         if (num!=0 && num<0.10) {
             new ConnectionProvider().updateAccountBalance(num, account);
+            initAccountList();
         }
     }//GEN-LAST:event_btnSubstractMoneyActionPerformed
 
     private void btnNewAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewAccountActionPerformed
         // TODO add your handling code here:
-        if (new ConnectionProvider().addNewAccount(idc, generateRandomAccount())) {
-            System.out.println("Success");
-        }
-        initAccountList();
+        long newAccNumber = generateRandomAccount();
+        if (new ConnectionProvider().addNewAccount(idc, newAccNumber)) {
+            initAccountList();
+            NewAccountCreatedDialog newAccountCreatedDialog = new NewAccountCreatedDialog((JFrame) this.getRootPane().getParent(), true, newAccNumber);
+            newAccountCreatedDialog.setLocationRelativeTo(null);
+            newAccountCreatedDialog.setVisible(true);
+        }  
     }//GEN-LAST:event_btnNewAccountActionPerformed
 
     private void txtAddAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAddAmountKeyReleased
