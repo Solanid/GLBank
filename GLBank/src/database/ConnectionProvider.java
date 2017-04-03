@@ -356,24 +356,6 @@ public class ConnectionProvider {
         return false;
     }
     
-    public boolean updateAccountBalance(float amount, Account account) {
-        String query = "UPDATE Accounts SET Balance=? WHERE idacc LIKE ?";
-        Connection conn = getConnection();
-        if (conn!=null) { 
-            try(PreparedStatement ps = conn.prepareStatement(query)) {
-                float balance = account.getBalance();
-                balance+=amount;
-                ps.setFloat(1, balance);
-                ps.setLong(2, account.getIdacc());
-                int x = ps.executeUpdate();
-                conn.close();
-                return x==1;
-            } catch(SQLException ex) {
-                System.out.println("updateAccountBalance error: "+ex.toString());
-            }
-        }
-        return false;
-    }
     
     public boolean addNewAccount(int idc, long idacc) {
         String query = "INSERT INTO Accounts VALUES(?, ?, 0)";
@@ -391,5 +373,55 @@ public class ConnectionProvider {
         }
         return false;
     }
+  
+    public void updateAccountBalance(float amount, long idacc, Connection conn) {
+        String query = "UPDATE Accounts SET Balance=balance+? WHERE idacc LIKE ?";
+        if (conn!=null) { 
+            try(PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setFloat(1, amount);
+                ps.setLong(2, idacc);
+                ps.executeUpdate();
+            } catch(SQLException ex) {
+                System.out.println("updateAccountBalance error: "+ex.toString());
+            }
+        }
+    }
+    
+    public void addNewCashTransactionLog(long idacc, float amount, int idemp, Connection conn) {
+        String query="INSERT INTO cashtransactions (idemp, amount, idacc, cashDateTime)"+
+                "VALUES (?, ?, ?, ?)";
+        String datetime = getDateTime();
+        if (conn!=null) {
+            try {
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setInt(1, idemp);
+                ps.setFloat(2, amount);
+                ps.setLong(3, idacc);
+                ps.setString(4, datetime);
+                ps.execute();
+            } catch (SQLException ex) {
+                System.out.println("logEmployeeAccess Error: "+ex.toString());
+            }  
+        }        
+    }
+    
+    public void insertCash(long idacc, float amount, int idemp) {
+        Connection conn = getConnection();
+        try {
+            try {
+                conn.setAutoCommit(false);
+                updateAccountBalance(amount, idacc, conn);
+                addNewCashTransactionLog(idacc, amount, idemp, conn);
+                conn.commit();
+                conn.close();
+            } catch (SQLException ex) {
+                conn.rollback();
+            }
+        } catch(SQLException ex) {
+            
+        }
+    }
+    
+    
     
 }

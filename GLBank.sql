@@ -91,3 +91,40 @@ INSERT INTO Accounts VALUES (4561232588,1,50.20);
 INSERT INTO Accounts VALUES (9401953275,1,1250.15);
 INSERT INTO Accounts VALUES (28161353,1,98555.33);
 INSERT INTO Accounts VALUES (1111886952,2,4521.84);
+
+CREATE TABLE BankTransactions(
+	idbt INTEGER AUTO_INCREMENT,
+	amount FLOAT(10,2) NOT NULL,
+	transdatetime DATETIME NOT NULL,
+	description VARCHAR(140) DEFAULT NULL,
+	idemp INT DEFAULT 0,
+	srcAcc BIGINT NOT NULL,
+	destAcc BIGINT NOT NULL,
+	srcBank INT NOT NULL,
+	descBank INT NOT NULL,
+	PRIMARY KEY (idbt),
+	FOREIGN KEY (idemp)
+		REFERENCES Employees(idemp)
+);
+
+CREATE TABLE CashTransactions{
+	idct INTEGER AUTO_INCREMENT,
+	idemp INTEGER NOT NULL,
+	amount FLOAT(10,2) DEFAULT 0,
+	idacc BIGINT NOT NULL,
+	cashDateTime datetime NOT NULL,
+	PRIMARY KEY (idct),
+	FOREIGN KEY (idemp)
+		REFERENCES Employees(idemp)
+	FOREIGN KEY (idacc)
+		REFERENCES Accounts(idacc)
+};
+
+CREATE TABLE ATMwithdrawals(
+	idatmw INTEGER AUTO_INCREMENT,
+	idacc BIGINT NOT NULL,
+	amount FLOAT(10,2) DEFAULT 0,
+	atmDateTime datetime NOT NULL,
+	idATM
+	idCard
+);

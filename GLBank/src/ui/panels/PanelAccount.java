@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import ui.NewAccountCreatedDialog;
 
 /**
@@ -19,14 +20,18 @@ import ui.NewAccountCreatedDialog;
  */
 public class PanelAccount extends javax.swing.JPanel {
     private int idc;
+    private int idemp;
     private List<Account> accList= null;
     Account account = null;
     /**
      * Creates new form PanelAccount
      */
-    public PanelAccount(int idc) {
+    public PanelAccount(int idc,int idemp) {
         initComponents();
         this.idc=idc;
+        this.idemp=idemp;
+        btnAddMoney.setEnabled(false);
+        btnSubstractMoney.setEnabled(false);
         initAccountList();
     }
     
@@ -38,6 +43,8 @@ public class PanelAccount extends javax.swing.JPanel {
         }
         account = accList.get(0);
         lblBalance.setText(account.getBalance()+"");
+        btnAddMoney.setEnabled(true);
+        btnSubstractMoney.setEnabled(true);
     }
     
     private void showListOfAllAccounts() {
@@ -205,21 +212,40 @@ public class PanelAccount extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_comboListIdAccActionPerformed
 
+    private float parseStringToFloat(String string) {
+        if (string.length()>0) {
+            try {
+                return Float.parseFloat(string);
+            } catch(NumberFormatException ex) {
+                
+            }
+        }
+        return 0;
+    }
+    
     private void btnAddMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMoneyActionPerformed
         String amountString = txtAddAmount.getText().trim();
-        float num = Float.parseFloat(amountString);
-        if (num!=0 && num>0.10) {
-            new ConnectionProvider().updateAccountBalance(num, account);
+        float actBalance = account.getBalance();
+        float amount = parseStringToFloat(amountString);
+        amount = (float)Math.round(amount*100)/100;
+        if (amount>=0.10) {
+            
+            
+            JOptionPane.showMessageDialog(this, "Deposit is OK.");
             initAccountList();
         }
     }//GEN-LAST:event_btnAddMoneyActionPerformed
 
     private void btnSubstractMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubstractMoneyActionPerformed
         String amountString = txtSubAmount.getText().trim();
-        float num = Float.parseFloat(amountString);
-        num*=-1;
-        if (num!=0 && num<0.10) {
-            new ConnectionProvider().updateAccountBalance(num, account);
+        float actBalance = account.getBalance();
+        float amount = parseStringToFloat(amountString);
+        amount = (float)Math.round(amount*100)/100;
+        amount*=-1;
+        if (amount<=0.10 && actBalance<amount) {
+            
+            
+            JOptionPane.showMessageDialog(this, "Withdrawing is OK.");
             initAccountList();
         }
     }//GEN-LAST:event_btnSubstractMoneyActionPerformed

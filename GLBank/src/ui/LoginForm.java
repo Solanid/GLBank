@@ -143,6 +143,7 @@ public class LoginForm extends javax.swing.JFrame {
                 this.setVisible(false);
                 mainForm.setLocationRelativeTo(null);
                 mainForm.setVisible(true);
+                btnLogin.setEnabled(false);
             }
             else {
                 lblErrorMessage.setText("Invalid username or password!");
