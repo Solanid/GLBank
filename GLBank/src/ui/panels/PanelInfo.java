@@ -52,7 +52,6 @@ public class PanelInfo extends javax.swing.JPanel {
         lblClientCity.setText(client.getCity());
         lblClientPostCode.setText(client.getPostcode());
         lblClientEmail.setText(client.getEmail());
-        lblClientDob.setText(client.getStringDob());
     }
     
     
@@ -222,17 +221,11 @@ public class PanelInfo extends javax.swing.JPanel {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-    //test
-    EditClientDialog ecd;
-    public EditClientDialog getEditClientDialog() {
-        return ecd;
-    }
-    
+   
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
         EditClientDialog editClientDialog = new EditClientDialog((JFrame) this.getRootPane().getParent(), true, client);
         editClientDialog.setLocationRelativeTo(null);
         editClientDialog.setVisible(true);
-        ecd = editClientDialog;
         editClientDialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {

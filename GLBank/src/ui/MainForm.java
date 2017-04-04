@@ -214,12 +214,18 @@ public class MainForm extends javax.swing.JFrame {
             PanelCards panelCards = new PanelCards();
             jTabbedPanel.add("Cards", panelCards);
         }
-        jTabbedPanel.addChangeListener(new ChangeListener() {
+        //changelistener test
+    /*    jTabbedPanel.addChangeListener(new ChangeListener() {
         public void stateChanged(ChangeEvent e) {
            // showListOfClients();
+            int index = comboListOfAllClients.getSelectedIndex();
+            Client client = list.get(index-1);
+            Client testClient = new ConnectionProvider().getClientDetails(client.getIdc());
+            showListOfClients();
+            comboListOfAllClients.setSelectedIndex(index);
             System.out.println("Tab: " + jTabbedPanel.getSelectedIndex());
         }
-    });
+    });*/
     }//GEN-LAST:event_comboListOfAllClientsActionPerformed
 
     private void btnNewClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewClientActionPerformed
