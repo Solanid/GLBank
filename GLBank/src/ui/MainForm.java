@@ -16,6 +16,9 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import ui.panels.PanelCards;
 
 /**
@@ -27,7 +30,6 @@ public class MainForm extends javax.swing.JFrame {
     private List<Client> list;
     
     private ConnectionProvider conn;
-    
     
     /**
      * Creates new form MainForm
@@ -212,6 +214,12 @@ public class MainForm extends javax.swing.JFrame {
             PanelCards panelCards = new PanelCards();
             jTabbedPanel.add("Cards", panelCards);
         }
+        jTabbedPanel.addChangeListener(new ChangeListener() {
+        public void stateChanged(ChangeEvent e) {
+           // showListOfClients();
+            System.out.println("Tab: " + jTabbedPanel.getSelectedIndex());
+        }
+    });
     }//GEN-LAST:event_comboListOfAllClientsActionPerformed
 
     private void btnNewClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewClientActionPerformed

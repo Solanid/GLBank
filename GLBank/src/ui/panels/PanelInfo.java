@@ -7,7 +7,11 @@ package ui.panels;
 
 import database.ConnectionProvider;
 import glbank.Client;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
+import javax.swing.JFrame;
+import ui.EditClientDialog;
 
 /**
  *
@@ -38,6 +42,19 @@ public class PanelInfo extends javax.swing.JPanel {
         String date = sdf.format(client.getDob());
         lblClientDob.setText(date);
     }
+    
+    public void initPanelInfo2() {
+        lblClientId.setText(client.getIdc()+"");
+        lblClientFirstName.setText(client.getFirstname());
+        lblClientLastName.setText(client.getLastname());
+        lblClientStreet.setText(client.getStreet());
+        lblClientHouseNum.setText(client.getHousenumber()+"");
+        lblClientCity.setText(client.getCity());
+        lblClientPostCode.setText(client.getPostcode());
+        lblClientEmail.setText(client.getEmail());
+        lblClientDob.setText(client.getStringDob());
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -205,12 +222,26 @@ public class PanelInfo extends javax.swing.JPanel {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    //test
+    EditClientDialog ecd;
+    public EditClientDialog getEditClientDialog() {
+        return ecd;
+    }
+    
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
-        // TODO add your handling code here:
-        
+        EditClientDialog editClientDialog = new EditClientDialog((JFrame) this.getRootPane().getParent(), true, client);
+        editClientDialog.setLocationRelativeTo(null);
+        editClientDialog.setVisible(true);
+        ecd = editClientDialog;
+        editClientDialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                client=editClientDialog.getClient();
+                initPanelInfo2();
+            }
+        });
     }//GEN-LAST:event_btnEditClientActionPerformed
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditClient;

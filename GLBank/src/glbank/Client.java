@@ -26,8 +26,8 @@ public class Client {
     private boolean disable;
     private boolean blocked;
 
-    public Client(int idemp, String firstname, String lastname, String email, String street, int housenumber, String city, String postcode, String username, Date dob, boolean disable, boolean blocked) {
-        this.idc = idemp;
+    public Client(int idc, String firstname, String lastname, String email, String street, int housenumber, String city, String postcode, String username, Date dob, boolean disable, boolean blocked) {
+        this.idc = idc;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -41,9 +41,25 @@ public class Client {
         this.disable = disable;
         this.blocked = blocked;
     }
+    
+    public Client(int idc, String firstname, String lastname, String email, String street, int housenumber, String city, String postcode, String username, String dob, boolean disable, boolean blocked) {
+        this.idc = idc;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.street = street;
+        this.housenumber = housenumber;
+        this.city = city;
+        this.postcode = postcode;
+        this.username = username;
+        this.stringDob = dob;
+        this.stringDob = null;
+        this.disable = disable;
+        this.blocked = blocked;
+    }
 
-    public Client(int idemp, String firstname, String lastname, Date dob) {
-        this.idc = idemp;
+    public Client(int idc, String firstname, String lastname, Date dob) {
+        this.idc = idc;
         this.firstname = firstname;
         this.lastname = lastname;
         this.dob = dob;

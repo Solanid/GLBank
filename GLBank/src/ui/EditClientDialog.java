@@ -8,23 +8,23 @@ package ui;
 import database.ConnectionProvider;
 import glbank.Client;
 import java.awt.event.KeyEvent;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 /**
  *
  * @author Solanid
  */
-public class NewClientForm extends javax.swing.JDialog {
-
+public class EditClientDialog extends javax.swing.JDialog {
+    private Client client;
     /**
-     * Creates new form NewClientForm
+     * Creates new form EditClientDialog
      */
-    public NewClientForm(java.awt.Frame parent, boolean modal) {
+    public EditClientDialog(java.awt.Frame parent, boolean modal, Client client) {
         super(parent, modal);
+        this.client=client;
         initComponents();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        dateDateOfBirth.setDateFormat(sdf);
         lblErrorMessage.setVisible(false);
+        initTxtFields();
     }
 
     /**
@@ -36,14 +36,20 @@ public class NewClientForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtPostcode = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        txtLogin = new javax.swing.JTextField();
+        btnConfirm = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
+        lblErrorMessage = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
@@ -52,43 +58,9 @@ public class NewClientForm extends javax.swing.JDialog {
         txtStreet = new javax.swing.JTextField();
         txtNumber = new javax.swing.JTextField();
         txtCity = new javax.swing.JTextField();
-        txtPostcode = new javax.swing.JTextField();
-        txtEmail = new javax.swing.JTextField();
-        txtLogin = new javax.swing.JTextField();
-        btnConfirm = new javax.swing.JButton();
-        btnCancel = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
-        lblErrorMessage = new javax.swing.JLabel();
-        dateDateOfBirth = new datechooser.beans.DateChooserCombo();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jLabel1.setText("First name:");
-
-        jLabel2.setText("Last name:");
-
-        jLabel3.setText("Street:");
-
-        jLabel4.setText("Number:");
-
-        jLabel5.setText("City:");
-
-        jLabel6.setText("Postcode:");
-
-        jLabel7.setText("Date of birth:");
-
-        jLabel8.setText("Email:");
-
-        jLabel9.setText("Login:");
-
-        jLabel10.setText("Password:");
-
-        txtNumber.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNumberKeyTyped(evt);
-            }
-        });
 
         txtPostcode.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -111,17 +83,41 @@ public class NewClientForm extends javax.swing.JDialog {
         });
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel11.setText("New Client");
+        jLabel11.setText("Edit Client");
+
+        jLabel1.setText("First name:");
 
         lblErrorMessage.setForeground(new java.awt.Color(255, 51, 51));
         lblErrorMessage.setText("Username is already used!");
+
+        jLabel2.setText("Last name:");
+
+        jLabel3.setText("Street:");
+
+        jLabel4.setText("Number:");
+
+        jLabel5.setText("City:");
+
+        jLabel6.setText("Postcode:");
+
+        jLabel8.setText("Email:");
+
+        jLabel9.setText("Login:");
+
+        jLabel10.setText("Password:");
+
+        txtNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumberKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(243, Short.MAX_VALUE)
+                .addContainerGap(248, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addGap(232, 232, 232))
             .addGroup(layout.createSequentialGroup()
@@ -157,25 +153,20 @@ public class NewClientForm extends javax.swing.JDialog {
                                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(lblErrorMessage))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtPostcode, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel6)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtPostcode, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(dateDateOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(21, 21, 21))
                     .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -186,21 +177,17 @@ public class NewClientForm extends javax.swing.JDialog {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7)))
-                    .addComponent(dateDateOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,120 +220,98 @@ public class NewClientForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtPostcodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPostcodeKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPostcodeKeyTyped
+
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
         String firstName = txtFirstName.getText().trim();
         String lastName = txtLastName.getText().trim();
         String email = txtEmail.getText().trim();
-        String dob =  dateDateOfBirth.getText();
-        //Date dobb = dateDateOfBirth.getSelectedDate().getTime();
-    /*    System.out.println(dob);
-        String[] date = new String[3]; 
-        date[0] = dob.split("\\.")[0];
-        date[1] = dob.split("\\.")[1];
-        date[2] = dob.split("\\.")[2];
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = null;
-        Date datee;
-         try {
-            startDate = df.parse(new String(date[0]+"-"+date[1]+"-"+date[2]));
-            String newDateString = df.format(startDate);
-            System.out.println(startDate);
-            datee = df.format(startDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
-    
-       // Date datum = sdf.parse(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
-       // String datum = sdf.format(new String(date[0]+"-"+date[1]+"-"+date[2]));
-       // System.out.println(datum);
-        
         String street = txtStreet.getText().trim();
         String numString=txtNumber.getText().trim();
-        
+
         if(numString.equals(""))
-            numString="0";
+        numString="0";
         boolean isNumeric = numString.chars().allMatch( Character::isDigit );
         int num;
         if(isNumeric) num=Integer.parseInt(numString); else num = 0;
-        
+
         String city = txtCity.getText().trim();
         String postCode = txtPostcode.getText().trim();
         String login = txtLogin.getText().trim();
-        String password = txtPassword.getText().trim();
-        
+        String password = new String(txtPassword.getPassword());
+
         if (firstName.length()==0) {
             lblErrorMessage.setText("Please enter firstname!");
             lblErrorMessage.setVisible(true);
             return;
         }
-        
         if (lastName.length()==0) {
             lblErrorMessage.setText("Please enter lastname!");
-            lblErrorMessage.setVisible(true);   
+            lblErrorMessage.setVisible(true);
             return;
         }
         if (email.length()==0) {
             lblErrorMessage.setText("Please enter email!");
-            lblErrorMessage.setVisible(true);   
-            return;            
-        }
-        if (dob.length()==0) {
-            lblErrorMessage.setText("Please enter date!");
-            lblErrorMessage.setVisible(true); 
+            lblErrorMessage.setVisible(true);
             return;
         }
         if (street.length()==0) {
             lblErrorMessage.setText("Please enter Street!");
-            lblErrorMessage.setVisible(true);      
+            lblErrorMessage.setVisible(true);
             return;
         }
         if (num==0) {
             lblErrorMessage.setText("Please enter house number!");
-            lblErrorMessage.setVisible(true);      
+            lblErrorMessage.setVisible(true);
             return;
-        }       
+        }
         if (city.length()==0) {
             lblErrorMessage.setText("Please enter house City!");
-            lblErrorMessage.setVisible(true);      
+            lblErrorMessage.setVisible(true);
             return;
-        }     
+        }
         if (postCode.length()==0) {
             lblErrorMessage.setText("Please enter post code!");
-            lblErrorMessage.setVisible(true);      
+            lblErrorMessage.setVisible(true);
             return;
-        }             
+        }
         if (login.length()==0) {
             lblErrorMessage.setText("Please enter Login!");
-            lblErrorMessage.setVisible(true);     
+            lblErrorMessage.setVisible(true);
             return;
         }
         if (login.length()<3) {
             lblErrorMessage.setText("Login must be > 3!");
-            lblErrorMessage.setVisible(true);  
+            lblErrorMessage.setVisible(true);
             return;
         }
-        if (new ConnectionProvider().isUsernameAlreadyUsed(login)) {
-            lblErrorMessage.setText("Login "+login+" already exists!");
-            lblErrorMessage.setVisible(true); 
-            return;            
-        }
-        if (!isPasswordValid(password)) {
+    /*    if (!isPasswordValid(password)) {
             lblErrorMessage.setText("Bad password form!");
             lblErrorMessage.setVisible(true);
-            return;             
-        }
+            return;
+        }*/
         if (password.length()==0) {
             lblErrorMessage.setText("Please enter password!");
             lblErrorMessage.setVisible(true);
         }
         else {
-            Client newClient = new Client(firstName, lastName, email, street, num, city, postCode, login, dob);
-            new ConnectionProvider().insertNewClient(newClient, password);
+            Client newClient = new Client(client.getIdc(), firstName, lastName, email, street, num, city, postCode, login, client.getStringDob(), false, false);
+            new ConnectionProvider().editNewClient(newClient, password);
+            client = newClient;
             this.dispose();
         }
-
     }//GEN-LAST:event_btnConfirmActionPerformed
-
+    
+    public Client getClient() {
+        return client;
+    }
+    
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.setVisible(false);
         this.dispose();
@@ -357,22 +322,24 @@ public class NewClientForm extends javax.swing.JDialog {
         if (!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)) {
             getToolkit().beep();
             evt.consume();
-        }  
+        }
     }//GEN-LAST:event_txtNumberKeyTyped
-
-    private void txtPostcodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPostcodeKeyTyped
-        char c = evt.getKeyChar();
-        if (!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)) {
-            getToolkit().beep();
-            evt.consume();
-        }  
-    }//GEN-LAST:event_txtPostcodeKeyTyped
-
+    
+    private void initTxtFields() {
+        txtFirstName.setText(client.getFirstname());
+        txtLastName.setText(client.getLastname());
+        txtEmail.setText(client.getEmail());
+        txtStreet.setText(client.getStreet());
+        txtNumber.setText(client.getHousenumber()+"");
+        txtCity.setText(client.getCity());
+        txtPostcode.setText(client.getPostcode());
+        txtLogin.setText(client.getUsername());
+        txtPassword.setText(new ConnectionProvider().getClientPassword(client.getIdc()));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnConfirm;
-    private datechooser.beans.DateChooserCombo dateDateOfBirth;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -381,7 +348,6 @@ public class NewClientForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblErrorMessage;
@@ -392,11 +358,11 @@ public class NewClientForm extends javax.swing.JDialog {
     private javax.swing.JTextField txtLastName;
     private javax.swing.JTextField txtLogin;
     private javax.swing.JTextField txtNumber;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtPostcode;
     private javax.swing.JTextField txtStreet;
     // End of variables declaration//GEN-END:variables
-
+    
     private boolean isPasswordValid(String newPassword) {
         newPassword = newPassword.trim();
         if (newPassword.length()<6) {

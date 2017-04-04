@@ -388,16 +388,14 @@ public class ConnectionProvider {
     }
     
     public void addNewCashTransactionLog(long idacc, float amount, int idemp, Connection conn) {
-        String query="INSERT INTO cashtransactions (idemp, amount, idacc, cashDateTime)"+
-                "VALUES (?, ?, ?, ?)";
-        String datetime = getDateTime();
+        String query="INSERT INTO cashtransactions (idemp, amount, idacc)"+
+                "VALUES (?, ?, ?)";
         if (conn!=null) {
             try {
                 PreparedStatement ps = conn.prepareStatement(query);
                 ps.setInt(1, idemp);
                 ps.setFloat(2, amount);
                 ps.setLong(3, idacc);
-                ps.setString(4, datetime);
                 ps.execute();
             } catch (SQLException ex) {
                 System.out.println("logEmployeeAccess Error: "+ex.toString());
@@ -422,6 +420,86 @@ public class ConnectionProvider {
         }
     }
     
+    // edit client
+    public void editNewClient(Client client, String password) {
+        Connection conn = getConnection();
+        if (updateClients(client, conn)) {
+            //System.out.println("update client OK");
+            if (updateClientDetails(client, conn)) {
+                //System.out.println("update clientDetails OK");
+                updateLoginClient(client, password, conn);
+            }
+        }
+    }
+    
+    public boolean updateClients(Client client, Connection conn) {
+        String query = "UPDATE clients SET firstname=?, lastname=? WHERE idc=?";
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, client.getFirstname());
+                ps.setString(2, client.getLastname());
+                ps.setInt(3, client.getIdc());
+                int x = ps.executeUpdate();
+                return x==1;
+            } catch(SQLException ex) {
+                System.out.println("updateClients error: "+ex.toString());
+            }
+        }
+        return false;
+    }
+    
+    public boolean updateClientDetails(Client client, Connection conn) {
+        String query = "UPDATE ClientDetails SET street=?, housenumber=?, postcode=?, email=?, city=?"+
+                " WHERE idc=?";
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, client.getStreet());
+                ps.setInt(2, client.getHousenumber());
+                ps.setString(3, client.getPostcode());
+                ps.setString(4, client.getEmail());
+                ps.setString(5, client.getCity());
+                ps.setInt(6, client.getIdc());
+                int x = ps.executeUpdate();
+                return x==1;
+            } catch(SQLException ex) {
+                System.out.println("updateClientDetails error: "+ex.toString());
+            }
+        }
+        return false;
+    }
+    
+    public boolean updateLoginClient(Client client, String password, Connection conn) {
+        String query = "UPDATE LoginClient SET login=?, password=? WHERE idc=?";
+        if (conn!=null) {
+            try(PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, client.getUsername());
+                ps.setString(2, password);
+                ps.setInt(3, client.getIdc());
+                int x = ps.executeUpdate();
+                return x==0;
+            } catch(SQLException ex) {
+                System.out.println("updateLoginClient error: "+ex.toString());
+            }
+        }
+        return false;
+    }
+      
+    public String getClientPassword(int idc) {
+        String query = "SELECT password FROM LoginClient WHERE idc=?";
+        Connection conn = getConnection();
+        if (conn!=null) {
+            try(PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, idc);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return rs.getString("password");
+                }
+            } catch(SQLException ex) {
+                System.out.println("updateLoginClient error: "+ex.toString());
+            }
+        }
+        return null;
+    }   
     
     
 }
