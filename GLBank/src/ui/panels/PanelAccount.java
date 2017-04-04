@@ -229,8 +229,7 @@ public class PanelAccount extends javax.swing.JPanel {
         float amount = parseStringToFloat(amountString);
         amount = (float)Math.round(amount*100)/100;
         if (amount>=0.10) {
-            
-            
+            new ConnectionProvider().insertCash(account.getIdacc(), amount, idemp);
             JOptionPane.showMessageDialog(this, "Deposit is OK.");
             initAccountList();
         }
@@ -241,10 +240,9 @@ public class PanelAccount extends javax.swing.JPanel {
         float actBalance = account.getBalance();
         float amount = parseStringToFloat(amountString);
         amount = (float)Math.round(amount*100)/100;
-        amount*=-1;
-        if (amount<=0.10 && actBalance<amount) {
-            
-            
+        if (amount>=0.10 && actBalance>amount) {
+            amount*=-1;
+            new ConnectionProvider().insertCash(account.getIdacc(), amount, idemp);
             JOptionPane.showMessageDialog(this, "Withdrawing is OK.");
             initAccountList();
         }
