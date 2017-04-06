@@ -526,14 +526,14 @@ public class ConnectionProvider {
                 }
                 conn.close();
             } catch(SQLException ex) {
-                System.out.println("getCardsByIdAcc error: "+toString());
+                System.out.println("getCardsByIdAcc error: "+ex.toString());
             }
         }
         return cards;
     }
     
     public boolean blockCard(char blocked, long cardNumber) {
-        String query = "UPDATE Cards SET bloacked=? WHERE cardNumber=?";
+        String query = "UPDATE Cards SET blocked=? WHERE cardNumber=?";
         Connection conn = getConnection();
         if (conn!=null) {
             try(PreparedStatement ps = conn.prepareStatement(query)) {
@@ -543,7 +543,7 @@ public class ConnectionProvider {
                 conn.close();
                 return x==0;
             } catch(SQLException ex) {
-                System.out.println("blockCard error: "+toString());
+                System.out.println("blockCard error: "+ex.toString());
             }
         } 
         return false;
@@ -560,7 +560,7 @@ public class ConnectionProvider {
                 conn.close();
                 return x==0;
             } catch(SQLException ex) {
-                System.out.println("changeCardPin error: "+toString());
+                System.out.println("changeCardPin error: "+ex.toString());
             }
         }
         return false;

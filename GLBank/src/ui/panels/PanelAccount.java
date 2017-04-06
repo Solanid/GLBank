@@ -145,6 +145,12 @@ public class PanelAccount extends javax.swing.JPanel {
 
         jLabel4.setText("Cards:");
 
+        comboListCards.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboListCardsActionPerformed(evt);
+            }
+        });
+
         btnNewCard.setText("New Card");
         btnNewCard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -253,6 +259,7 @@ public class PanelAccount extends javax.swing.JPanel {
         cardList = new ConnectionProvider().getCardsByIdAcc(account.getIdacc());
         comboListCards.removeAllItems();
         if (cardList!=null && cardList.size()>0) {
+            btnEditCard.setEnabled(true);
             cardList.forEach((crd) ->{
                 if (crd.isBlocked()) {
                     comboListCards.addItem(crd.getCardNumber()+" (BLOCKED)");
@@ -260,6 +267,8 @@ public class PanelAccount extends javax.swing.JPanel {
                 comboListCards.addItem(crd.getCardNumber()+" (ACTIVE)");
             });
         }
+        else
+        btnEditCard.setEnabled(false);
     }
     
     private float parseStringToFloat(String string) {
@@ -342,7 +351,7 @@ public class PanelAccount extends javax.swing.JPanel {
         editCardForm.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                
+                showListOfCards();
             }
         });
     }//GEN-LAST:event_btnEditCardActionPerformed
@@ -354,6 +363,13 @@ public class PanelAccount extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "New Card created with pin "+pin+".");
         showListOfCards();
     }//GEN-LAST:event_btnNewCardActionPerformed
+
+    private void comboListCardsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboListCardsActionPerformed
+        int index = comboListCards.getSelectedIndex();
+        if (index>=0) {
+            selectedCard = cardList.get(index);
+        }
+    }//GEN-LAST:event_comboListCardsActionPerformed
 
     private long generateRandomAccount() {
         ConnectionProvider conn = new ConnectionProvider();
