@@ -14,4 +14,43 @@ public class Card {
     private long cardNumber;
     private long idAcc;
     private boolean blocked;
+    private int pin;
+
+    public Card(int idCard, long cardNumber, long idAcc, boolean blocked, int pin) {
+        this.idCard = idCard;
+        this.cardNumber = cardNumber;
+        this.idAcc = idAcc;
+        this.blocked = blocked;
+        this.pin = pin;
+    }
+
+    public Card(long cardNumber, long idAcc, int pin) {
+        this.cardNumber = cardNumber;
+        this.idAcc = idAcc;
+        this.pin = pin;
+        this.idCard = 0;
+        this.blocked = false;
+    }
+    
+    public int getIdCard() {
+        return idCard;
+    }
+
+    public long getCardNumber() {
+        return cardNumber;
+    }
+
+    public long getIdAcc() {
+        return idAcc;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public int getPin() {
+        return pin;
+    }
+    
+    
 }

@@ -7,11 +7,15 @@ package ui.panels;
 
 import database.ConnectionProvider;
 import glbank.Account;
+import glbank.Card;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import ui.EditCardForm;
 import ui.NewAccountCreatedDialog;
 
 /**
@@ -21,8 +25,11 @@ import ui.NewAccountCreatedDialog;
 public class PanelAccount extends javax.swing.JPanel {
     private int idc;
     private int idemp;
-    private List<Account> accList= null;
+    private List<Account> accList = null;
+    private List<Card> cardList = null;
     Account account = null;
+    Card selectedCard = null;
+    
     /**
      * Creates new form PanelAccount
      */
@@ -81,6 +88,7 @@ public class PanelAccount extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         comboListCards = new javax.swing.JComboBox<>();
         btnNewCard = new javax.swing.JButton();
+        btnEditCard = new javax.swing.JButton();
 
         jLabel1.setText("Bank account:");
 
@@ -138,6 +146,18 @@ public class PanelAccount extends javax.swing.JPanel {
         jLabel4.setText("Cards:");
 
         btnNewCard.setText("New Card");
+        btnNewCard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewCardActionPerformed(evt);
+            }
+        });
+
+        btnEditCard.setText("Edit Card");
+        btnEditCard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditCardActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -149,14 +169,11 @@ public class PanelAccount extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnAddMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnSubstractMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(19, 19, 19))
+                                .addComponent(btnAddMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSubstractMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtAddAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -172,14 +189,16 @@ public class PanelAccount extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(comboListCards, javax.swing.GroupLayout.Alignment.LEADING, 0, 144, Short.MAX_VALUE)
-                    .addComponent(comboListIdAcc, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBalance, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboListCards, 0, 210, Short.MAX_VALUE)
+                    .addComponent(comboListIdAcc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnNewAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
                     .addComponent(btnNewCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEditCard, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -194,18 +213,18 @@ public class PanelAccount extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(comboListCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNewCard))
+                    .addComponent(btnNewCard)
+                    .addComponent(btnEditCard))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
+                        .addGap(132, 132, 132)
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblBalance)
                             .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,14 +241,27 @@ public class PanelAccount extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void comboListIdAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboListIdAccActionPerformed
-        // TODO add your handling code here:
         int index = comboListIdAcc.getSelectedIndex();
         if (index>=0) {
             account = accList.get(index);
             lblBalance.setText(account.getBalance()+"");
+            showListOfCards();
         }
     }//GEN-LAST:event_comboListIdAccActionPerformed
-
+    
+    private void showListOfCards() {
+        cardList = new ConnectionProvider().getCardsByIdAcc(account.getIdacc());
+        comboListCards.removeAllItems();
+        if (cardList!=null && cardList.size()>0) {
+            cardList.forEach((crd) ->{
+                if (crd.isBlocked()) {
+                    comboListCards.addItem(crd.getCardNumber()+" (BLOCKED)");
+                } else 
+                comboListCards.addItem(crd.getCardNumber()+" (ACTIVE)");
+            });
+        }
+    }
+    
     private float parseStringToFloat(String string) {
         if (string.length()>0) {
             try {
@@ -303,6 +335,26 @@ public class PanelAccount extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtSubAmountKeyTyped
 
+    private void btnEditCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCardActionPerformed
+        EditCardForm editCardForm = new EditCardForm((JFrame) this.getRootPane().getParent(), true, selectedCard);
+        editCardForm.setLocationRelativeTo(null);
+        editCardForm.setVisible(true);
+        editCardForm.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                
+            }
+        });
+    }//GEN-LAST:event_btnEditCardActionPerformed
+
+    private void btnNewCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewCardActionPerformed
+        int pin = generateCardPin();
+        Card newCard = new Card(generateCardNumber(), account.getIdacc(), pin);
+        new ConnectionProvider().addNewCard(newCard);
+        JOptionPane.showMessageDialog(this, "New Card created with pin "+pin+".");
+        showListOfCards();
+    }//GEN-LAST:event_btnNewCardActionPerformed
+
     private long generateRandomAccount() {
         ConnectionProvider conn = new ConnectionProvider();
         long proposalAccount = 0;
@@ -312,9 +364,34 @@ public class PanelAccount extends javax.swing.JPanel {
         return proposalAccount;
     }
     
+    private long generateCardNumber() {
+        ConnectionProvider conn = new ConnectionProvider();
+        long proposalCardNumber = Math.abs(new Random().nextInt()%10);
+        long num1 = new Long(1000000000)*1000000;
+        do {
+            proposalCardNumber = 0;
+            proposalCardNumber = Math.abs(new Random().nextInt()%10);
+            while ( proposalCardNumber < num1 || proposalCardNumber > num1*10) {
+                proposalCardNumber*=10;
+                proposalCardNumber += new Random().nextInt()%10;
+            }
+        } while (conn.isCardNumberAlreadyUsed(proposalCardNumber));
+        return proposalCardNumber;
+    }
+    
+    private int generateCardPin() {
+        int pin = 0;
+        for (int i = 0; i < 3; i++) {
+            pin += Math.abs(new Random().nextInt()%10);
+            pin *= 10;
+        } 
+        pin += new Random().nextInt()%10;
+        return pin;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMoney;
+    private javax.swing.JButton btnEditCard;
     private javax.swing.JButton btnNewAccount;
     private javax.swing.JButton btnNewCard;
     private javax.swing.JButton btnSubstractMoney;
@@ -330,4 +407,6 @@ public class PanelAccount extends javax.swing.JPanel {
     private javax.swing.JTextField txtAddAmount;
     private javax.swing.JTextField txtSubAmount;
     // End of variables declaration//GEN-END:variables
+
+    
 }

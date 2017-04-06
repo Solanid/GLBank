@@ -6,6 +6,7 @@
 package database;
 
 import glbank.Account;
+import glbank.Card;
 import glbank.Client;
 import glbank.Employee;
 import java.sql.Connection;
@@ -229,7 +230,9 @@ public class ConnectionProvider {
             try (PreparedStatement ps = conn.prepareStatement(querry)){
                 ps.setString(1, username);
                 ResultSet rs = ps.executeQuery();
-                return rs.next();
+                boolean state = rs.next();
+                conn.close();
+                return state;
             } catch(SQLException ex) {
                 System.out.println("isUsernameAlreadyUsed error: "+ex.toString());                
             }
@@ -348,7 +351,9 @@ public class ConnectionProvider {
             try (PreparedStatement ps = conn.prepareStatement(querry)){
                 ps.setLong(1, proposalAccount);
                 ResultSet rs = ps.executeQuery();
-                return rs.next();
+                boolean state = rs.next();
+                conn.close();
+                return state;
             } catch(SQLException ex) {
                 System.out.println("isAccountAlreadyUsed error: "+ex.toString());                
             }
@@ -492,7 +497,9 @@ public class ConnectionProvider {
                 ps.setInt(1, idc);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
-                    return rs.getString("password");
+                    String password = rs.getString("password");
+                    conn.close();
+                    return password;
                 }
             } catch(SQLException ex) {
                 System.out.println("updateLoginClient error: "+ex.toString());
@@ -500,6 +507,97 @@ public class ConnectionProvider {
         }
         return null;
     }   
+  
+    public List<Card> getCardsByIdAcc(long idAcc) {
+        String query = "SELECT * FROM Cards WHERE idAcc=?";
+        Connection conn = getConnection();
+        List<Card> cards= new ArrayList<>();
+        if (conn!=null) {
+            try(PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setLong(1, idAcc);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    long cardNumber = rs.getLong("cardNumber");
+                    int idCard = rs.getInt("idCard");
+                    boolean blocked = rs.getString("blocked").charAt(0)=='T';
+                    int pin = rs.getInt("pin");
+                    Card card = new Card(idCard, cardNumber, idAcc, blocked, pin);
+                    cards.add(card);
+                }
+                conn.close();
+            } catch(SQLException ex) {
+                System.out.println("getCardsByIdAcc error: "+toString());
+            }
+        }
+        return cards;
+    }
     
+    public boolean blockCard(char blocked, long cardNumber) {
+        String query = "UPDATE Cards SET bloacked=? WHERE cardNumber=?";
+        Connection conn = getConnection();
+        if (conn!=null) {
+            try(PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, new String().valueOf(blocked)); //Character.toString(char) or String.valueOf(char)
+                ps.setLong(2, cardNumber);
+                int x = ps.executeUpdate();
+                conn.close();
+                return x==0;
+            } catch(SQLException ex) {
+                System.out.println("blockCard error: "+toString());
+            }
+        } 
+        return false;
+    }
     
+    public boolean changeCardPin(long cardNumber, int newPin) {
+        String query = "UPDATE Cards SET pin=? WHERE cardNumber=?";
+        Connection conn = getConnection();
+        if (conn!=null) {
+            try(PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, newPin);
+                ps.setLong(2, cardNumber);
+                int x = ps.executeUpdate();
+                conn.close();
+                return x==0;
+            } catch(SQLException ex) {
+                System.out.println("changeCardPin error: "+toString());
+            }
+        }
+        return false;
+    }
+    
+    public boolean isCardNumberAlreadyUsed(long proposalCardNumber) {
+        String querry = "SELECT * FROM Cards WHERE cardNumber LIKE ?";
+        Connection conn = getConnection();
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(querry)){
+                ps.setLong(1, proposalCardNumber);
+                ResultSet rs = ps.executeQuery();
+                boolean state = rs.next();
+                conn.close();
+                return state;
+            } catch(SQLException ex) {
+                System.out.println("isCardNumberAlreadyUsed error: "+ex.toString());                
+            }
+        }
+        return false;
+    }
+    
+    public boolean addNewCard(Card card) {
+        String querry = "INSERT INTO Cards(cardNumber, idAcc, pin) VALUES (?, ?, ?)";
+        Connection conn = getConnection();
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(querry)){
+                ps.setLong(1, card.getCardNumber());
+                ps.setLong(2, card.getIdAcc());
+                ps.setInt(3, card.getPin());
+                int x = ps.executeUpdate();
+                conn.close();
+                return x==0;
+            } catch(SQLException ex) {
+                System.out.println("addNewCard error: "+ex.toString());                
+            }
+        }
+        return false;
+    }
 }
