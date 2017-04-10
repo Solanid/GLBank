@@ -600,4 +600,9 @@ public class ConnectionProvider {
         }
         return false;
     }
+    
+    public boolean transferMoney() {
+        return false;
+    }
+    
 }
