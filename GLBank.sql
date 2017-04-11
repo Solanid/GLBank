@@ -143,3 +143,26 @@ CREATE TABLE Cards(
 		REFERENCES Accounts(idAcc)
 		ON DELETE CASCADE ON UPDATE RESTRICT
 );
+
+SET delimiter //
+CREATE TRIGGER new_acc_bonus BEFORE INSERT ON ACCOUNTS 
+FOR EACH ROW
+BEGIN
+SET NEW.balance=NEW.balance+5;
+END;
+//
+delimiter ;
+/*
+CREATE VIEW balanceoncard AS
+SELECT 
+*/
+delimiter //
+CREATE TRIGGER housenumber_restr BEFORE INSERT ON  ClientDetails
+FOR EACH ROW
+BEGIN
+	IF NEW.housenumber<0 THEN
+		SET NEW.housenumber=NEW.housenumber*-1;
+	END IF;
+END;
+//
+delimiter ;

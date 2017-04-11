@@ -601,7 +601,85 @@ public class ConnectionProvider {
         return false;
     }
     
-    public boolean transferMoney() {
+    public boolean transferMoney(float amount, long idAcc, boolean isInsert, Connection conn) {
+        String querry = "UPDATE Accounts SET balance=balance+? WHERE idAcc=?";
+        if (isInsert==false) {
+            amount*=-1;
+        }
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(querry)) {
+                ps.setFloat(1, amount);
+                ps.setLong(2, idAcc);
+                int x = ps.executeUpdate();
+                return x==0;
+            } catch(SQLException ex) {
+                System.out.println("transferMoney error: "+ex.toString());
+            }
+        }
+        return false;
+    }
+    
+    public boolean addNewBankTransactionLog(float amount, long srcAcc, long destAcc,int idemp, String description, int srcBank,int destBank, Connection conn) {
+        String querry = "INSERT INTO BankTransactions(amount, description, idEmp, srcAcc, destAcc, srcBank, destBank)";
+        if (conn!=null) {
+            try (PreparedStatement ps = conn.prepareStatement(querry)) {
+                ps.setFloat(1, amount);
+                ps.setLong(2, srcAcc);
+                ps.setLong(3, destAcc);
+                ps.setInt(4, idemp);
+                ps.setString(5, description);
+                ps.setInt(6, srcBank);
+                ps.setInt(7, destBank);
+                int x = ps.executeUpdate();
+                return x==0;
+            } catch(SQLException ex) {
+                System.out.println("transferMoney error: "+ex.toString());
+            }
+        }
+        return false;    
+    }
+    
+    public boolean doBankTransaction(float amount, long srcAcc, long destAcc,int idemp, String description, int srcBank,int destBank) {
+        Connection conn = getConnection();
+        if (conn!=null) {
+            //transaction between glbank accounts
+            if (destBank==2701 && srcBank==destBank) {
+                try {
+                    try {
+                        conn.setAutoCommit(false);
+                        if (addNewBankTransactionLog(amount, srcAcc, destAcc, idemp, description, srcBank, destBank, conn) && 
+                            transferMoney( amount, srcAcc, false, conn) &&
+                            transferMoney( amount, destAcc, true, conn)) {
+                            conn.commit();
+                            conn.close();
+                            return true;
+                        }
+                    } catch (SQLException ex) {
+                        conn.rollback();   
+                        conn.close();
+                    }
+                } catch(SQLException ex) {
+                }
+            }
+            //transaction into other banks
+            if (destBank!=2701) {
+                try {
+                    try {
+                        conn.setAutoCommit(false);
+                        if (addNewBankTransactionLog(amount, srcAcc, destAcc, idemp, description, srcBank, destBank, conn) && 
+                            transferMoney( amount, srcAcc, false, conn)) {
+                            conn.commit();
+                            conn.close();
+                            return true;
+                        }
+                    } catch (SQLException ex) {
+                        conn.rollback();   
+                        conn.close();
+                    }
+                } catch(SQLException ex) {
+                }
+            }
+        }
         return false;
     }
     

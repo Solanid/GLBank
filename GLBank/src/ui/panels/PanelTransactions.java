@@ -5,23 +5,39 @@
  */
 package ui.panels;
 
+import database.ConnectionProvider;
+import glbank.Account;
 import java.awt.ComponentOrientation;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 /**
  *
  * @author Solanid
  */
 public class PanelTransactions extends javax.swing.JPanel {
-
+    private int idc;
+    private List<Account> accList = null;
     /**
      * Creates new form PanelTransactions
      */
-    public PanelTransactions() {
+    public PanelTransactions(int idc) {
+        this.idc = idc;
         initComponents();
+        showListOfAllAccounts();
         txtAmountNonDecimalPart.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
     }
 
+    private void showListOfAllAccounts() {
+        comboListIdAcc.removeAllItems();
+        accList = new ConnectionProvider().getListOfAccountsByIdc(idc);
+        if (accList!=null && accList.size()>0) {
+            accList.forEach((acc) -> {
+                comboListIdAcc.addItem(acc.getIdacc()+" / 2701");
+            });
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,7 +49,7 @@ public class PanelTransactions extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboListIdAcc = new javax.swing.JComboBox<>();
         txtDestAccountNumber = new javax.swing.JTextField();
         comboBoxDestBank = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -51,6 +67,12 @@ public class PanelTransactions extends javax.swing.JPanel {
         jLabel1.setText("Source account number:");
 
         jLabel2.setText("Destination Account:");
+
+        txtDestAccountNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDestAccountNumberKeyTyped(evt);
+            }
+        });
 
         comboBoxDestBank.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bank Code", "2701 (GLB)", "7500", "5600", "8360", "0900", "1100", "8410" }));
 
@@ -90,6 +112,11 @@ public class PanelTransactions extends javax.swing.JPanel {
         jLabel7.setText("Description:");
 
         jButton2.setText("Confirm");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel8.setText("New Bank Transaction");
@@ -98,40 +125,39 @@ public class PanelTransactions extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel7))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtDestAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxDestBank, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtAmountNonDecimalPart, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAmountDecimalPart, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(185, 185, 185)
                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(181, 181, 181))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel7))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(comboListIdAcc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtDestAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboBoxDestBank, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtAmountNonDecimalPart, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtAmountDecimalPart, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -142,7 +168,7 @@ public class PanelTransactions extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboListIdAcc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -176,7 +202,7 @@ public class PanelTransactions extends javax.swing.JPanel {
             getToolkit().beep();
             evt.consume();
         }
-        if (txtAmountNonDecimalPart.getText().length() >= 14 ) // limit textfield to 4 characters
+        if (txtAmountNonDecimalPart.getText().length() >= 14 )
             evt.consume();
     }//GEN-LAST:event_txtAmountNonDecimalPartKeyTyped
 
@@ -186,15 +212,47 @@ public class PanelTransactions extends javax.swing.JPanel {
             getToolkit().beep();
             evt.consume();
         }
-        if (txtAmountDecimalPart.getText().length() >= 2 ) // limit textfield to 4 characters
+        if (txtAmountDecimalPart.getText().length() >= 2 )
             evt.consume();
     }//GEN-LAST:event_txtAmountDecimalPartKeyTyped
+
+    private void txtDestAccountNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDestAccountNumberKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        if (txtDestAccountNumber.getText().length() >= 16 )
+            evt.consume();
+    }//GEN-LAST:event_txtDestAccountNumberKeyTyped
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int srcAccIndex = comboListIdAcc.getSelectedIndex();
+        long srcAcc = accList.get(srcAccIndex).getIdacc();
+        long destAcc = Long.parseLong(txtDestAccountNumber.getText().trim());
+        String destBankString = String.valueOf(comboBoxDestBank.getSelectedItem()).trim();
+        int amountNonDecimalPart = Integer.parseInt(txtAmountNonDecimalPart.getText().trim());
+        float amountDecimalPart = Integer.parseInt(txtAmountDecimalPart.getText().trim())/100;
+        float amount = amountNonDecimalPart+amountDecimalPart;
+        String desc = txtFieldDescription.getText().trim();
+        
+        if(destBankString.equals(""))
+        destBankString="0";
+        boolean isNumeric = destBankString.chars().allMatch( Character::isDigit );
+        int destBank;
+        if(isNumeric) destBank=Integer.parseInt(destBankString); else destBank = 0;
+        
+        
+        if (srcAcc!=0 && destAcc!=0 && destBankString!="Bank Code" && amount!=0) {
+            new ConnectionProvider().doBankTransaction(amount, srcAcc, destAcc, idc, desc, 2701, destBank);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboBoxDestBank;
+    private javax.swing.JComboBox<String> comboListIdAcc;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
