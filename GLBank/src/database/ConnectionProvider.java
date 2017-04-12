@@ -601,86 +601,55 @@ public class ConnectionProvider {
         return false;
     }
     
-    public boolean transferMoney(float amount, long idAcc, boolean isInsert, Connection conn) {
-        String querry = "UPDATE Accounts SET balance=balance+? WHERE idAcc=?";
-        if (isInsert==false) {
-            amount*=-1;
-        }
-        if (conn!=null) {
-            try (PreparedStatement ps = conn.prepareStatement(querry)) {
-                ps.setFloat(1, amount);
-                ps.setLong(2, idAcc);
-                int x = ps.executeUpdate();
-                return x==0;
-            } catch(SQLException ex) {
-                System.out.println("transferMoney error: "+ex.toString());
-            }
-        }
-        return false;
-    }
-    
-    public boolean addNewBankTransactionLog(float amount, long srcAcc, long destAcc,int idemp, String description, int srcBank,int destBank, Connection conn) {
-        String querry = "INSERT INTO BankTransactions(amount, description, idEmp, srcAcc, destAcc, srcBank, destBank)";
-        if (conn!=null) {
-            try (PreparedStatement ps = conn.prepareStatement(querry)) {
-                ps.setFloat(1, amount);
-                ps.setLong(2, srcAcc);
-                ps.setLong(3, destAcc);
-                ps.setInt(4, idemp);
-                ps.setString(5, description);
-                ps.setInt(6, srcBank);
-                ps.setInt(7, destBank);
-                int x = ps.executeUpdate();
-                return x==0;
-            } catch(SQLException ex) {
-                System.out.println("transferMoney error: "+ex.toString());
-            }
-        }
-        return false;    
-    }
-    
-    public boolean doBankTransaction(float amount, long srcAcc, long destAcc,int idemp, String description, int srcBank,int destBank) {
+    /*BEGIN Bank Transaction */
+    public boolean bankTransaction(float amount, long srcAcc, long destAcc,int idemp, String description, int srcBank,int destBank) throws SQLException{
         Connection conn = getConnection();
-        if (conn!=null) {
-            //transaction between glbank accounts
-            if (destBank==2701 && srcBank==destBank) {
-                try {
-                    try {
-                        conn.setAutoCommit(false);
-                        if (addNewBankTransactionLog(amount, srcAcc, destAcc, idemp, description, srcBank, destBank, conn) && 
-                            transferMoney( amount, srcAcc, false, conn) &&
-                            transferMoney( amount, destAcc, true, conn)) {
-                            conn.commit();
-                            conn.close();
-                            return true;
-                        }
-                    } catch (SQLException ex) {
-                        conn.rollback();   
-                        conn.close();
-                    }
-                } catch(SQLException ex) {
-                }
+        String querryLog = "INSERT INTO BankTransactions(amount, description, idEmp, srcAcc, destAcc, srcBank, descBank)"+
+                " VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String querryTransfer = "UPDATE Accounts SET balance=balance+? WHERE idAcc=?";
+        
+        try {
+            conn.setAutoCommit(false);
+            //adding transaction log
+            PreparedStatement addTransactionLog = conn.prepareStatement(querryLog);
+            addTransactionLog.setFloat(1, amount);
+            addTransactionLog.setString(2, description);
+            addTransactionLog.setInt(3, idemp);
+            addTransactionLog.setLong(4, srcAcc);
+            addTransactionLog.setLong(5, destAcc);
+            addTransactionLog.setInt(6, srcBank);
+            addTransactionLog.setInt(7, destBank);
+            addTransactionLog.executeUpdate();
+            //substractiong money from source account
+            PreparedStatement subMoney = conn.prepareStatement(querryTransfer);
+            subMoney.setFloat(1, amount*(-1));
+            subMoney.setLong(2, srcAcc);
+            subMoney.executeUpdate();
+            //adding money into destination account if dest bank is 2701
+            if (srcBank==destBank) {
+                PreparedStatement addMoney = conn.prepareStatement(querryTransfer);
+                addMoney.setFloat(1, amount);
+                addMoney.setLong(2, destAcc);
+                addMoney.executeUpdate();
             }
-            //transaction into other banks
-            if (destBank!=2701) {
+            //commit transaction
+            conn.commit();
+            conn.close();
+            return true;
+        } catch(SQLException ex) {
+            System.out.println("bankTransaction error: "+ex.toString());
+            if (conn != null) {
                 try {
-                    try {
-                        conn.setAutoCommit(false);
-                        if (addNewBankTransactionLog(amount, srcAcc, destAcc, idemp, description, srcBank, destBank, conn) && 
-                            transferMoney( amount, srcAcc, false, conn)) {
-                            conn.commit();
-                            conn.close();
-                            return true;
-                        }
-                    } catch (SQLException ex) {
-                        conn.rollback();   
-                        conn.close();
-                    }
-                } catch(SQLException ex) {
+                    System.err.print("Transaction is being rolled back");
+                    conn.rollback();
+                    conn.close();
+                } catch(SQLException excep) {
+                    System.out.println("bankTransaction error: "+excep.toString());
                 }
             }
         }
         return false;
     }
+    /* END Bank Transaction */ 
     
 }

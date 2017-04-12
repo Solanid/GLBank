@@ -9,7 +9,12 @@ import database.ConnectionProvider;
 import glbank.Account;
 import java.awt.ComponentOrientation;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,12 +22,14 @@ import java.util.List;
  */
 public class PanelTransactions extends javax.swing.JPanel {
     private int idc;
+    private int idemp;
     private List<Account> accList = null;
     /**
      * Creates new form PanelTransactions
      */
-    public PanelTransactions(int idc) {
+    public PanelTransactions(int idc,int idemp) {
         this.idc = idc;
+        this.idemp = idemp;
         initComponents();
         showListOfAllAccounts();
         txtAmountNonDecimalPart.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -222,29 +229,55 @@ public class PanelTransactions extends javax.swing.JPanel {
             getToolkit().beep();
             evt.consume();
         }
-        if (txtDestAccountNumber.getText().length() >= 16 )
+        if (txtDestAccountNumber.getText().length() >= 10 )
             evt.consume();
     }//GEN-LAST:event_txtDestAccountNumberKeyTyped
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ConnectionProvider cp = new ConnectionProvider();
+        
         int srcAccIndex = comboListIdAcc.getSelectedIndex();
         long srcAcc = accList.get(srcAccIndex).getIdacc();
-        long destAcc = Long.parseLong(txtDestAccountNumber.getText().trim());
-        String destBankString = String.valueOf(comboBoxDestBank.getSelectedItem()).trim();
-        int amountNonDecimalPart = Integer.parseInt(txtAmountNonDecimalPart.getText().trim());
-        float amountDecimalPart = Integer.parseInt(txtAmountDecimalPart.getText().trim())/100;
-        float amount = amountNonDecimalPart+amountDecimalPart;
-        String desc = txtFieldDescription.getText().trim();
+        float actBalance = accList.get(srcAccIndex).getBalance();
         
-        if(destBankString.equals(""))
-        destBankString="0";
+        String destBankString = String.valueOf(comboBoxDestBank.getSelectedItem()).trim();
+        if(destBankString.isEmpty()) destBankString="0";
         boolean isNumeric = destBankString.chars().allMatch( Character::isDigit );
         int destBank;
-        if(isNumeric) destBank=Integer.parseInt(destBankString); else destBank = 0;
+        if(isNumeric) destBank=Integer.parseInt(destBankString); else destBank = 2701;
         
+        String stringNonDecimalPart = txtAmountNonDecimalPart.getText().trim();
+        if(stringNonDecimalPart.isEmpty()) 
+            stringNonDecimalPart="0";
+        String stringDecimalPart = txtAmountDecimalPart.getText().trim();
+        if(stringDecimalPart.isEmpty()) 
+            stringDecimalPart="0";
+        int amountNonDecimalPart = Integer.parseInt(stringNonDecimalPart);
+        float amountDecimalPart = Float.parseFloat(stringDecimalPart)/100;
+        float amount = amountNonDecimalPart+amountDecimalPart;
         
-        if (srcAcc!=0 && destAcc!=0 && destBankString!="Bank Code" && amount!=0) {
-            new ConnectionProvider().doBankTransaction(amount, srcAcc, destAcc, idc, desc, 2701, destBank);
+        System.out.println(amount);
+        
+        if (srcAcc!=0 && txtDestAccountNumber.getText().trim()!="" && destBankString!="Bank Code" && amount!=0 && amount<actBalance) {
+            long destAcc = Long.parseLong(txtDestAccountNumber.getText().trim());
+            if (destBank==2701 && cp.isAccountAlreadyUsed(destAcc)==false) {
+                System.out.println("bad idacc");
+                return;
+            }
+            if (destAcc==srcAcc) {
+                System.out.println("You cant trasfer money between same accounts!");
+                return;
+            }
+            String desc = txtFieldDescription.getText().trim();
+            try {
+                if (cp.bankTransaction(amount, srcAcc, destAcc, idemp, desc, 2701, destBank)) {
+                    JOptionPane.showMessageDialog(this, "Transactin successful!");
+                }
+                else
+                    JOptionPane.showMessageDialog(this, "Transactin failed!");
+            } catch (SQLException ex) {
+                Logger.getLogger(PanelTransactions.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
