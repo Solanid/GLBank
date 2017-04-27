@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import ui.AccountStatementDialog;
 import ui.EditCardForm;
 import ui.NewAccountCreatedDialog;
 
@@ -89,6 +90,7 @@ public class PanelAccount extends javax.swing.JPanel {
         comboListCards = new javax.swing.JComboBox<>();
         btnNewCard = new javax.swing.JButton();
         btnEditCard = new javax.swing.JButton();
+        btnStatements = new javax.swing.JButton();
 
         jLabel1.setText("Bank account:");
 
@@ -165,6 +167,13 @@ public class PanelAccount extends javax.swing.JPanel {
             }
         });
 
+        btnStatements.setText("Statements");
+        btnStatements.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStatementsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -204,7 +213,9 @@ public class PanelAccount extends javax.swing.JPanel {
                     .addComponent(btnNewAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
                     .addComponent(btnNewCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEditCard, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEditCard, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                    .addComponent(btnStatements, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -214,7 +225,8 @@ public class PanelAccount extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(comboListIdAcc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNewAccount))
+                    .addComponent(btnNewAccount)
+                    .addComponent(btnStatements))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -371,6 +383,12 @@ public class PanelAccount extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_comboListCardsActionPerformed
 
+    private void btnStatementsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatementsActionPerformed
+        AccountStatementDialog accStatementDialog = new AccountStatementDialog((JFrame) this.getRootPane().getParent(), true);
+        accStatementDialog.setLocationRelativeTo(null);
+        accStatementDialog.setVisible(true);
+    }//GEN-LAST:event_btnStatementsActionPerformed
+
     private long generateRandomAccount() {
         ConnectionProvider conn = new ConnectionProvider();
         long proposalAccount = 0;
@@ -410,6 +428,7 @@ public class PanelAccount extends javax.swing.JPanel {
     private javax.swing.JButton btnEditCard;
     private javax.swing.JButton btnNewAccount;
     private javax.swing.JButton btnNewCard;
+    private javax.swing.JButton btnStatements;
     private javax.swing.JButton btnSubstractMoney;
     private javax.swing.JComboBox<String> comboListCards;
     private javax.swing.JComboBox<String> comboListIdAcc;

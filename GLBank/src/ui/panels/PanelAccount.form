@@ -60,7 +60,10 @@
                   <Component id="btnNewCard" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnEditCard" min="-2" pref="125" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="btnEditCard" pref="125" max="32767" attributes="0"/>
+                  <Component id="btnStatements" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -73,6 +76,7 @@
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="comboListIdAcc" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnNewAccount" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnStatements" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -235,6 +239,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditCardActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnStatements">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Statements"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStatementsActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
