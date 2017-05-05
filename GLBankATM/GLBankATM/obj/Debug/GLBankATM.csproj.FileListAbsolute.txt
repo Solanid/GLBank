@@ -1,0 +1,10 @@
+c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\bin\Debug\GLBankATM.exe.config
+c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\bin\Debug\GLBankATM.exe
+c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\bin\Debug\GLBankATM.pdb
+c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\obj\Debug\GLBankATM.csprojResolveAssemblyReference.cache
+c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\obj\Debug\GLBankATM.ATMForm.resources
+c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\obj\Debug\GLBankATM.Form1.resources
+c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\obj\Debug\GLBankATM.Properties.Resources.resources
+c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\obj\Debug\GLBankATM.csproj.GenerateResource.Cache
+c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\obj\Debug\GLBankATM.exe
+c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\obj\Debug\GLBankATM.pdb
