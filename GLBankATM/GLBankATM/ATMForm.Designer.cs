@@ -49,13 +49,14 @@
             this.btnRightPanel3 = new System.Windows.Forms.Button();
             this.btnRightPanel4 = new System.Windows.Forms.Button();
             this.panelATM = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblLangEnglish = new System.Windows.Forms.Label();
+            this.lblLangSlovak = new System.Windows.Forms.Label();
             this.panelATM.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnKeyboard1
             // 
-            this.btnKeyboard1.Location = new System.Drawing.Point(290, 325);
+            this.btnKeyboard1.Location = new System.Drawing.Point(160, 300);
             this.btnKeyboard1.Name = "btnKeyboard1";
             this.btnKeyboard1.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboard1.TabIndex = 0;
@@ -64,7 +65,7 @@
             // 
             // btnKeyboard2
             // 
-            this.btnKeyboard2.Location = new System.Drawing.Point(346, 325);
+            this.btnKeyboard2.Location = new System.Drawing.Point(216, 300);
             this.btnKeyboard2.Name = "btnKeyboard2";
             this.btnKeyboard2.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboard2.TabIndex = 1;
@@ -73,7 +74,7 @@
             // 
             // btnKeyboard5
             // 
-            this.btnKeyboard5.Location = new System.Drawing.Point(346, 381);
+            this.btnKeyboard5.Location = new System.Drawing.Point(216, 356);
             this.btnKeyboard5.Name = "btnKeyboard5";
             this.btnKeyboard5.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboard5.TabIndex = 2;
@@ -82,7 +83,7 @@
             // 
             // btnKeyboard3
             // 
-            this.btnKeyboard3.Location = new System.Drawing.Point(402, 325);
+            this.btnKeyboard3.Location = new System.Drawing.Point(272, 300);
             this.btnKeyboard3.Name = "btnKeyboard3";
             this.btnKeyboard3.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboard3.TabIndex = 2;
@@ -91,7 +92,7 @@
             // 
             // btnKeyboard4
             // 
-            this.btnKeyboard4.Location = new System.Drawing.Point(290, 381);
+            this.btnKeyboard4.Location = new System.Drawing.Point(160, 356);
             this.btnKeyboard4.Name = "btnKeyboard4";
             this.btnKeyboard4.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboard4.TabIndex = 3;
@@ -100,7 +101,7 @@
             // 
             // btnKeyboard6
             // 
-            this.btnKeyboard6.Location = new System.Drawing.Point(402, 381);
+            this.btnKeyboard6.Location = new System.Drawing.Point(272, 356);
             this.btnKeyboard6.Name = "btnKeyboard6";
             this.btnKeyboard6.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboard6.TabIndex = 4;
@@ -109,7 +110,7 @@
             // 
             // btnKeyboard7
             // 
-            this.btnKeyboard7.Location = new System.Drawing.Point(290, 437);
+            this.btnKeyboard7.Location = new System.Drawing.Point(160, 412);
             this.btnKeyboard7.Name = "btnKeyboard7";
             this.btnKeyboard7.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboard7.TabIndex = 5;
@@ -118,7 +119,7 @@
             // 
             // btnKeyboard0
             // 
-            this.btnKeyboard0.Location = new System.Drawing.Point(346, 493);
+            this.btnKeyboard0.Location = new System.Drawing.Point(216, 468);
             this.btnKeyboard0.Name = "btnKeyboard0";
             this.btnKeyboard0.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboard0.TabIndex = 6;
@@ -127,7 +128,7 @@
             // 
             // btnKeyboard8
             // 
-            this.btnKeyboard8.Location = new System.Drawing.Point(346, 437);
+            this.btnKeyboard8.Location = new System.Drawing.Point(216, 412);
             this.btnKeyboard8.Name = "btnKeyboard8";
             this.btnKeyboard8.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboard8.TabIndex = 6;
@@ -136,7 +137,7 @@
             // 
             // btnKeyboard9
             // 
-            this.btnKeyboard9.Location = new System.Drawing.Point(402, 437);
+            this.btnKeyboard9.Location = new System.Drawing.Point(272, 412);
             this.btnKeyboard9.Name = "btnKeyboard9";
             this.btnKeyboard9.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboard9.TabIndex = 7;
@@ -145,7 +146,7 @@
             // 
             // btnLeftPanel1
             // 
-            this.btnLeftPanel1.Location = new System.Drawing.Point(166, 68);
+            this.btnLeftPanel1.Location = new System.Drawing.Point(36, 43);
             this.btnLeftPanel1.Name = "btnLeftPanel1";
             this.btnLeftPanel1.Size = new System.Drawing.Size(50, 50);
             this.btnLeftPanel1.TabIndex = 8;
@@ -153,7 +154,7 @@
             // 
             // btnKeyboardC
             // 
-            this.btnKeyboardC.Location = new System.Drawing.Point(290, 493);
+            this.btnKeyboardC.Location = new System.Drawing.Point(160, 468);
             this.btnKeyboardC.Name = "btnKeyboardC";
             this.btnKeyboardC.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboardC.TabIndex = 8;
@@ -162,7 +163,7 @@
             // 
             // btnKeyboardOK
             // 
-            this.btnKeyboardOK.Location = new System.Drawing.Point(402, 493);
+            this.btnKeyboardOK.Location = new System.Drawing.Point(272, 468);
             this.btnKeyboardOK.Name = "btnKeyboardOK";
             this.btnKeyboardOK.Size = new System.Drawing.Size(50, 50);
             this.btnKeyboardOK.TabIndex = 9;
@@ -171,7 +172,7 @@
             // 
             // btnLeftPanel2
             // 
-            this.btnLeftPanel2.Location = new System.Drawing.Point(166, 124);
+            this.btnLeftPanel2.Location = new System.Drawing.Point(36, 99);
             this.btnLeftPanel2.Name = "btnLeftPanel2";
             this.btnLeftPanel2.Size = new System.Drawing.Size(50, 50);
             this.btnLeftPanel2.TabIndex = 10;
@@ -179,7 +180,7 @@
             // 
             // btnLeftPanel3
             // 
-            this.btnLeftPanel3.Location = new System.Drawing.Point(166, 180);
+            this.btnLeftPanel3.Location = new System.Drawing.Point(36, 155);
             this.btnLeftPanel3.Name = "btnLeftPanel3";
             this.btnLeftPanel3.Size = new System.Drawing.Size(50, 50);
             this.btnLeftPanel3.TabIndex = 11;
@@ -187,15 +188,16 @@
             // 
             // btnLeftPanel4
             // 
-            this.btnLeftPanel4.Location = new System.Drawing.Point(166, 236);
+            this.btnLeftPanel4.Location = new System.Drawing.Point(36, 211);
             this.btnLeftPanel4.Name = "btnLeftPanel4";
             this.btnLeftPanel4.Size = new System.Drawing.Size(50, 50);
             this.btnLeftPanel4.TabIndex = 12;
             this.btnLeftPanel4.UseVisualStyleBackColor = true;
+            this.btnLeftPanel4.Click += new System.EventHandler(this.btnLeftPanel4_Click);
             // 
             // btnRightPanel1
             // 
-            this.btnRightPanel1.Location = new System.Drawing.Point(528, 68);
+            this.btnRightPanel1.Location = new System.Drawing.Point(398, 43);
             this.btnRightPanel1.Name = "btnRightPanel1";
             this.btnRightPanel1.Size = new System.Drawing.Size(50, 50);
             this.btnRightPanel1.TabIndex = 13;
@@ -203,7 +205,7 @@
             // 
             // btnRightPanel2
             // 
-            this.btnRightPanel2.Location = new System.Drawing.Point(528, 124);
+            this.btnRightPanel2.Location = new System.Drawing.Point(398, 99);
             this.btnRightPanel2.Name = "btnRightPanel2";
             this.btnRightPanel2.Size = new System.Drawing.Size(50, 50);
             this.btnRightPanel2.TabIndex = 14;
@@ -211,7 +213,7 @@
             // 
             // btnRightPanel3
             // 
-            this.btnRightPanel3.Location = new System.Drawing.Point(528, 180);
+            this.btnRightPanel3.Location = new System.Drawing.Point(398, 155);
             this.btnRightPanel3.Name = "btnRightPanel3";
             this.btnRightPanel3.Size = new System.Drawing.Size(50, 50);
             this.btnRightPanel3.TabIndex = 15;
@@ -219,7 +221,7 @@
             // 
             // btnRightPanel4
             // 
-            this.btnRightPanel4.Location = new System.Drawing.Point(528, 236);
+            this.btnRightPanel4.Location = new System.Drawing.Point(398, 211);
             this.btnRightPanel4.Name = "btnRightPanel4";
             this.btnRightPanel4.Size = new System.Drawing.Size(50, 50);
             this.btnRightPanel4.TabIndex = 16;
@@ -227,31 +229,38 @@
             // 
             // panelATM
             // 
-            this.panelATM.Controls.Add(this.tableLayoutPanel1);
-            this.panelATM.Location = new System.Drawing.Point(222, 57);
+            this.panelATM.Controls.Add(this.lblLangEnglish);
+            this.panelATM.Controls.Add(this.lblLangSlovak);
+            this.panelATM.Location = new System.Drawing.Point(92, 32);
             this.panelATM.Name = "panelATM";
             this.panelATM.Size = new System.Drawing.Size(300, 250);
             this.panelATM.TabIndex = 17;
             this.panelATM.Paint += new System.Windows.Forms.PaintEventHandler(this.panelATM_Paint);
             // 
-            // tableLayoutPanel1
+            // lblLangEnglish
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 100);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.lblLangEnglish.AutoSize = true;
+            this.lblLangEnglish.Location = new System.Drawing.Point(203, 198);
+            this.lblLangEnglish.Name = "lblLangEnglish";
+            this.lblLangEnglish.Size = new System.Drawing.Size(41, 13);
+            this.lblLangEnglish.TabIndex = 1;
+            this.lblLangEnglish.Text = "English";
+            // 
+            // lblLangSlovak
+            // 
+            this.lblLangSlovak.AutoSize = true;
+            this.lblLangSlovak.Location = new System.Drawing.Point(52, 198);
+            this.lblLangSlovak.Name = "lblLangSlovak";
+            this.lblLangSlovak.Size = new System.Drawing.Size(56, 13);
+            this.lblLangSlovak.TabIndex = 0;
+            this.lblLangSlovak.Text = "Slovensky";
+            this.lblLangSlovak.Click += new System.EventHandler(this.label1_Click);
             // 
             // ATMForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(731, 647);
+            this.ClientSize = new System.Drawing.Size(490, 548);
             this.Controls.Add(this.panelATM);
             this.Controls.Add(this.btnRightPanel4);
             this.Controls.Add(this.btnRightPanel3);
@@ -276,6 +285,7 @@
             this.Name = "ATMForm";
             this.Text = "ATMForm";
             this.panelATM.ResumeLayout(false);
+            this.panelATM.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -303,6 +313,7 @@
         private System.Windows.Forms.Button btnRightPanel3;
         private System.Windows.Forms.Button btnRightPanel4;
         private System.Windows.Forms.Panel panelATM;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label lblLangSlovak;
+        private System.Windows.Forms.Label lblLangEnglish;
     }
 }

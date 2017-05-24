@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace GLBankATM
 {
@@ -32,9 +33,19 @@ namespace GLBankATM
             String idcard = txtCardNumber.Text;
             //Console.Write("dfsfsd");
             long id;
+
             if (long.TryParse(idcard, out id))
             {
-
+                if (new Database().existCard(id) && new Database().isCardBlocked(id)==false)
+                {
+                    ATMForm formAtm = new ATMForm(id);
+                    formAtm.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    Console.Write("Card doesn't exists!");
+                }
             }
         }
     }
