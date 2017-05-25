@@ -49,8 +49,17 @@
             this.btnRightPanel3 = new System.Windows.Forms.Button();
             this.btnRightPanel4 = new System.Windows.Forms.Button();
             this.panelATM = new System.Windows.Forms.Panel();
+            this.lblBalance = new System.Windows.Forms.Label();
+            this.lblMenuLanguage = new System.Windows.Forms.Label();
+            this.lblMenuBalance = new System.Windows.Forms.Label();
+            this.lblMenuPin = new System.Windows.Forms.Label();
+            this.lblMenuMoney = new System.Windows.Forms.Label();
+            this.lblEnterPin = new System.Windows.Forms.Label();
+            this.txtPin = new System.Windows.Forms.TextBox();
             this.lblLangEnglish = new System.Windows.Forms.Label();
             this.lblLangSlovak = new System.Windows.Forms.Label();
+            this.lblBack = new System.Windows.Forms.Label();
+            this.lblExit = new System.Windows.Forms.Label();
             this.panelATM.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,6 +71,7 @@
             this.btnKeyboard1.TabIndex = 0;
             this.btnKeyboard1.Text = "1";
             this.btnKeyboard1.UseVisualStyleBackColor = true;
+            this.btnKeyboard1.Click += new System.EventHandler(this.btnKeyboard1_Click);
             // 
             // btnKeyboard2
             // 
@@ -71,6 +81,7 @@
             this.btnKeyboard2.TabIndex = 1;
             this.btnKeyboard2.Text = "2";
             this.btnKeyboard2.UseVisualStyleBackColor = true;
+            this.btnKeyboard2.Click += new System.EventHandler(this.btnKeyboard2_Click);
             // 
             // btnKeyboard5
             // 
@@ -80,6 +91,7 @@
             this.btnKeyboard5.TabIndex = 2;
             this.btnKeyboard5.Text = "5";
             this.btnKeyboard5.UseVisualStyleBackColor = true;
+            this.btnKeyboard5.Click += new System.EventHandler(this.btnKeyboard5_Click);
             // 
             // btnKeyboard3
             // 
@@ -89,6 +101,7 @@
             this.btnKeyboard3.TabIndex = 2;
             this.btnKeyboard3.Text = "3";
             this.btnKeyboard3.UseVisualStyleBackColor = true;
+            this.btnKeyboard3.Click += new System.EventHandler(this.btnKeyboard3_Click);
             // 
             // btnKeyboard4
             // 
@@ -98,6 +111,7 @@
             this.btnKeyboard4.TabIndex = 3;
             this.btnKeyboard4.Text = "4";
             this.btnKeyboard4.UseVisualStyleBackColor = true;
+            this.btnKeyboard4.Click += new System.EventHandler(this.btnKeyboard4_Click);
             // 
             // btnKeyboard6
             // 
@@ -107,6 +121,7 @@
             this.btnKeyboard6.TabIndex = 4;
             this.btnKeyboard6.Text = "6";
             this.btnKeyboard6.UseVisualStyleBackColor = true;
+            this.btnKeyboard6.Click += new System.EventHandler(this.btnKeyboard6_Click);
             // 
             // btnKeyboard7
             // 
@@ -116,6 +131,7 @@
             this.btnKeyboard7.TabIndex = 5;
             this.btnKeyboard7.Text = "7";
             this.btnKeyboard7.UseVisualStyleBackColor = true;
+            this.btnKeyboard7.Click += new System.EventHandler(this.btnKeyboard7_Click);
             // 
             // btnKeyboard0
             // 
@@ -125,6 +141,7 @@
             this.btnKeyboard0.TabIndex = 6;
             this.btnKeyboard0.Text = "0";
             this.btnKeyboard0.UseVisualStyleBackColor = true;
+            this.btnKeyboard0.Click += new System.EventHandler(this.btnKeyboard0_Click);
             // 
             // btnKeyboard8
             // 
@@ -134,6 +151,7 @@
             this.btnKeyboard8.TabIndex = 6;
             this.btnKeyboard8.Text = "8";
             this.btnKeyboard8.UseVisualStyleBackColor = true;
+            this.btnKeyboard8.Click += new System.EventHandler(this.btnKeyboard8_Click);
             // 
             // btnKeyboard9
             // 
@@ -143,6 +161,7 @@
             this.btnKeyboard9.TabIndex = 7;
             this.btnKeyboard9.Text = "9";
             this.btnKeyboard9.UseVisualStyleBackColor = true;
+            this.btnKeyboard9.Click += new System.EventHandler(this.btnKeyboard9_Click);
             // 
             // btnLeftPanel1
             // 
@@ -160,6 +179,7 @@
             this.btnKeyboardC.TabIndex = 8;
             this.btnKeyboardC.Text = "C";
             this.btnKeyboardC.UseVisualStyleBackColor = true;
+            this.btnKeyboardC.Click += new System.EventHandler(this.btnKeyboardC_Click);
             // 
             // btnKeyboardOK
             // 
@@ -169,6 +189,7 @@
             this.btnKeyboardOK.TabIndex = 9;
             this.btnKeyboardOK.Text = "OK";
             this.btnKeyboardOK.UseVisualStyleBackColor = true;
+            this.btnKeyboardOK.Click += new System.EventHandler(this.btnKeyboardOK_Click);
             // 
             // btnLeftPanel2
             // 
@@ -185,6 +206,7 @@
             this.btnLeftPanel3.Size = new System.Drawing.Size(50, 50);
             this.btnLeftPanel3.TabIndex = 11;
             this.btnLeftPanel3.UseVisualStyleBackColor = true;
+            this.btnLeftPanel3.Click += new System.EventHandler(this.btnLeftPanel3_Click);
             // 
             // btnLeftPanel4
             // 
@@ -202,6 +224,7 @@
             this.btnRightPanel1.Size = new System.Drawing.Size(50, 50);
             this.btnRightPanel1.TabIndex = 13;
             this.btnRightPanel1.UseVisualStyleBackColor = true;
+            this.btnRightPanel1.Click += new System.EventHandler(this.btnRightPanel1_Click);
             // 
             // btnRightPanel2
             // 
@@ -210,6 +233,7 @@
             this.btnRightPanel2.Size = new System.Drawing.Size(50, 50);
             this.btnRightPanel2.TabIndex = 14;
             this.btnRightPanel2.UseVisualStyleBackColor = true;
+            this.btnRightPanel2.Click += new System.EventHandler(this.btnRightPanel2_Click);
             // 
             // btnRightPanel3
             // 
@@ -218,6 +242,7 @@
             this.btnRightPanel3.Size = new System.Drawing.Size(50, 50);
             this.btnRightPanel3.TabIndex = 15;
             this.btnRightPanel3.UseVisualStyleBackColor = true;
+            this.btnRightPanel3.Click += new System.EventHandler(this.btnRightPanel3_Click);
             // 
             // btnRightPanel4
             // 
@@ -226,9 +251,19 @@
             this.btnRightPanel4.Size = new System.Drawing.Size(50, 50);
             this.btnRightPanel4.TabIndex = 16;
             this.btnRightPanel4.UseVisualStyleBackColor = true;
+            this.btnRightPanel4.Click += new System.EventHandler(this.btnRightPanel4_Click);
             // 
             // panelATM
             // 
+            this.panelATM.Controls.Add(this.lblExit);
+            this.panelATM.Controls.Add(this.lblBack);
+            this.panelATM.Controls.Add(this.lblBalance);
+            this.panelATM.Controls.Add(this.lblMenuLanguage);
+            this.panelATM.Controls.Add(this.lblMenuBalance);
+            this.panelATM.Controls.Add(this.lblMenuPin);
+            this.panelATM.Controls.Add(this.lblMenuMoney);
+            this.panelATM.Controls.Add(this.lblEnterPin);
+            this.panelATM.Controls.Add(this.txtPin);
             this.panelATM.Controls.Add(this.lblLangEnglish);
             this.panelATM.Controls.Add(this.lblLangSlovak);
             this.panelATM.Location = new System.Drawing.Point(92, 32);
@@ -237,24 +272,145 @@
             this.panelATM.TabIndex = 17;
             this.panelATM.Paint += new System.Windows.Forms.PaintEventHandler(this.panelATM_Paint);
             // 
+            // lblBalance
+            // 
+            this.lblBalance.AutoSize = true;
+            this.lblBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblBalance.Location = new System.Drawing.Point(107, 106);
+            this.lblBalance.Name = "lblBalance";
+            this.lblBalance.Size = new System.Drawing.Size(98, 29);
+            this.lblBalance.TabIndex = 8;
+            this.lblBalance.Text = "balance";
+            this.lblBalance.Visible = false;
+            // 
+            // lblMenuLanguage
+            // 
+            this.lblMenuLanguage.AutoSize = true;
+            this.lblMenuLanguage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblMenuLanguage.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblMenuLanguage.Location = new System.Drawing.Point(147, 137);
+            this.lblMenuLanguage.MaximumSize = new System.Drawing.Size(150, 0);
+            this.lblMenuLanguage.MinimumSize = new System.Drawing.Size(150, 0);
+            this.lblMenuLanguage.Name = "lblMenuLanguage";
+            this.lblMenuLanguage.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblMenuLanguage.Size = new System.Drawing.Size(150, 20);
+            this.lblMenuLanguage.TabIndex = 7;
+            this.lblMenuLanguage.Text = "Change Language";
+            this.lblMenuLanguage.Visible = false;
+            this.lblMenuLanguage.Click += new System.EventHandler(this.lblMenu_Click);
+            // 
+            // lblMenuBalance
+            // 
+            this.lblMenuBalance.AutoSize = true;
+            this.lblMenuBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblMenuBalance.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblMenuBalance.Location = new System.Drawing.Point(167, 81);
+            this.lblMenuBalance.MaximumSize = new System.Drawing.Size(130, 0);
+            this.lblMenuBalance.MinimumSize = new System.Drawing.Size(130, 0);
+            this.lblMenuBalance.Name = "lblMenuBalance";
+            this.lblMenuBalance.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblMenuBalance.Size = new System.Drawing.Size(130, 20);
+            this.lblMenuBalance.TabIndex = 6;
+            this.lblMenuBalance.Text = "Check Balance";
+            this.lblMenuBalance.Visible = false;
+            this.lblMenuBalance.Click += new System.EventHandler(this.lblMenuLanguage_Click);
+            // 
+            // lblMenuPin
+            // 
+            this.lblMenuPin.AutoSize = true;
+            this.lblMenuPin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblMenuPin.Location = new System.Drawing.Point(3, 137);
+            this.lblMenuPin.Name = "lblMenuPin";
+            this.lblMenuPin.Size = new System.Drawing.Size(95, 20);
+            this.lblMenuPin.TabIndex = 5;
+            this.lblMenuPin.Text = "Change PIN";
+            this.lblMenuPin.Visible = false;
+            this.lblMenuPin.Click += new System.EventHandler(this.lblMenuPin_Click);
+            // 
+            // lblMenuMoney
+            // 
+            this.lblMenuMoney.AutoSize = true;
+            this.lblMenuMoney.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblMenuMoney.Location = new System.Drawing.Point(3, 81);
+            this.lblMenuMoney.Name = "lblMenuMoney";
+            this.lblMenuMoney.Size = new System.Drawing.Size(126, 20);
+            this.lblMenuMoney.TabIndex = 4;
+            this.lblMenuMoney.Text = "Withdraw Money";
+            this.lblMenuMoney.Visible = false;
+            this.lblMenuMoney.Click += new System.EventHandler(this.lblMenuMoney_Click);
+            // 
+            // lblEnterPin
+            // 
+            this.lblEnterPin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblEnterPin.AutoSize = true;
+            this.lblEnterPin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblEnterPin.Location = new System.Drawing.Point(108, 67);
+            this.lblEnterPin.Name = "lblEnterPin";
+            this.lblEnterPin.Size = new System.Drawing.Size(82, 20);
+            this.lblEnterPin.TabIndex = 3;
+            this.lblEnterPin.Text = "Enter PIN:";
+            this.lblEnterPin.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblEnterPin.Visible = false;
+            this.lblEnterPin.Click += new System.EventHandler(this.label1_Click_1);
+            // 
+            // txtPin
+            // 
+            this.txtPin.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txtPin.Location = new System.Drawing.Point(65, 97);
+            this.txtPin.MaxLength = 4;
+            this.txtPin.Name = "txtPin";
+            this.txtPin.ReadOnly = true;
+            this.txtPin.Size = new System.Drawing.Size(176, 44);
+            this.txtPin.TabIndex = 2;
+            this.txtPin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtPin.UseSystemPasswordChar = true;
+            this.txtPin.Visible = false;
+            this.txtPin.TextChanged += new System.EventHandler(this.txtPin_TextChanged);
+            // 
             // lblLangEnglish
             // 
             this.lblLangEnglish.AutoSize = true;
-            this.lblLangEnglish.Location = new System.Drawing.Point(203, 198);
+            this.lblLangEnglish.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblLangEnglish.Location = new System.Drawing.Point(236, 193);
             this.lblLangEnglish.Name = "lblLangEnglish";
-            this.lblLangEnglish.Size = new System.Drawing.Size(41, 13);
+            this.lblLangEnglish.Size = new System.Drawing.Size(61, 20);
             this.lblLangEnglish.TabIndex = 1;
             this.lblLangEnglish.Text = "English";
             // 
             // lblLangSlovak
             // 
             this.lblLangSlovak.AutoSize = true;
-            this.lblLangSlovak.Location = new System.Drawing.Point(52, 198);
+            this.lblLangSlovak.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblLangSlovak.Location = new System.Drawing.Point(3, 193);
             this.lblLangSlovak.Name = "lblLangSlovak";
-            this.lblLangSlovak.Size = new System.Drawing.Size(56, 13);
+            this.lblLangSlovak.Size = new System.Drawing.Size(80, 20);
             this.lblLangSlovak.TabIndex = 0;
             this.lblLangSlovak.Text = "Slovensky";
             this.lblLangSlovak.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // lblBack
+            // 
+            this.lblBack.AutoSize = true;
+            this.lblBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblBack.Location = new System.Drawing.Point(3, 193);
+            this.lblBack.Name = "lblBack";
+            this.lblBack.Size = new System.Drawing.Size(45, 20);
+            this.lblBack.TabIndex = 9;
+            this.lblBack.Text = "Back";
+            this.lblBack.Visible = false;
+            // 
+            // lblExit
+            // 
+            this.lblExit.AutoSize = true;
+            this.lblExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblExit.Location = new System.Drawing.Point(262, 25);
+            this.lblExit.Name = "lblExit";
+            this.lblExit.Size = new System.Drawing.Size(35, 20);
+            this.lblExit.TabIndex = 10;
+            this.lblExit.Text = "Exit";
+            this.lblExit.Click += new System.EventHandler(this.label1_Click_2);
             // 
             // ATMForm
             // 
@@ -315,5 +471,14 @@
         private System.Windows.Forms.Panel panelATM;
         private System.Windows.Forms.Label lblLangSlovak;
         private System.Windows.Forms.Label lblLangEnglish;
+        private System.Windows.Forms.TextBox txtPin;
+        private System.Windows.Forms.Label lblEnterPin;
+        private System.Windows.Forms.Label lblMenuLanguage;
+        private System.Windows.Forms.Label lblMenuBalance;
+        private System.Windows.Forms.Label lblMenuPin;
+        private System.Windows.Forms.Label lblMenuMoney;
+        private System.Windows.Forms.Label lblBalance;
+        private System.Windows.Forms.Label lblBack;
+        private System.Windows.Forms.Label lblExit;
     }
 }

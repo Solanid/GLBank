@@ -53,6 +53,7 @@
     <Compile Include="ATMForm.Designer.cs">
       <DependentUpon>ATMForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CenterMy.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -60,6 +61,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="MessagesLang.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ATMForm.resx">

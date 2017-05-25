@@ -43,7 +43,7 @@ namespace GLBankATM
             }
         }
 
-        public bool existCard(long idcard)
+        public Nullable<int> existCard(long idcard)
         {
             String query = "SELECT idCard FROM cards WHERE cardNumber LIKE " + idcard;
             if (connection != null)
@@ -54,14 +54,14 @@ namespace GLBankATM
                     MySqlDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
                     {
-                        return true;
+                        return reader.GetInt32("idCard");
                     }
                 }catch (Exception ex)
                 {
                     Console.WriteLine("MySQL error:" + ex.ToString());
                 }
             }
-            return false;
+            return null;
         }
 
         public bool isCardBlocked(long idcard)
@@ -85,5 +85,106 @@ namespace GLBankATM
             }
             return true;
         }
+
+        public bool isPinCorrect(int pin, long idcard)
+        {
+            String query = "SELECT idCard FROM cards WHERE pin LIKE " + pin + " AND cardNumber LIKE "+ idcard;
+            if (connection != null)
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("MySQL isPinCorrect error:" + ex.ToString());
+                }
+            }
+            return false;
+        }
+
+        public void incorrectPin(int idCard)
+        {
+            String query = "INSERT INTO unsuccessful_atm_logins (idCard) VALUES(" + idCard + ")";
+            if (connection != null)
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("MySQL incorrectPin error:" + ex.ToString());
+                }
+            }
+        }
+
+        public int getNumOfUnsuccessfullLoginAttemnts(int idCard)
+        {
+            String query = "SELECT count(*) AS attemnts FROM unsuccessful_atm_logins WHERE idCard LIKE " + idCard;
+            if (connection != null)
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return reader.GetInt32("attemnts");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("MySQL getNumOfUnsuccessfullLoginAttemnts error:" + ex.ToString());
+                }
+            }
+            return 0;
+        }
+
+        public void resetLoginAttemnts(int idCard)
+        {
+            String query = "DELETE FROM unsuccessful_atm_logins WHERE idCard LIKE " + idCard;
+            if (connection != null)
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("MySQL resetLoginAttemnts error:" + ex.ToString());
+                }
+            }
+        }
+
+        public float getBalance(int idCard)
+        {
+            String query = "SELECT accounts.balance FROM cards INNER JOIN accounts ON cards.idAcc = accounts.idacc WHERE idCard LIKE " + idCard;
+            if (connection != null)
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return reader.GetFloat("balance");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("MySQL getBalance error:" + ex.ToString());
+                }
+            }
+            return 0;
+        }
+
     }
 }

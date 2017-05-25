@@ -16,6 +16,7 @@ namespace GLBankATM
         public Form1()
         {
             InitializeComponent();
+            this.CenterToScreen();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -31,22 +32,29 @@ namespace GLBankATM
         private void btnOk_Click(object sender, EventArgs e)
         {
             String idcard = txtCardNumber.Text;
-            //Console.Write("dfsfsd");
-            long id;
+            long cardNumber;
 
-            if (long.TryParse(idcard, out id))
+            if (long.TryParse(idcard, out cardNumber))
             {
-                if (new Database().existCard(id) && new Database().isCardBlocked(id)==false)
+                int? idCard = new Database().existCard(cardNumber);
+                if (idCard != null && new Database().isCardBlocked(cardNumber) == false)
                 {
-                    ATMForm formAtm = new ATMForm(id);
-                    formAtm.Show();
+                    txtCardNumber.Text = "";
                     this.Hide();
+                    ATMForm formAtm = new ATMForm(cardNumber, idCard.Value);
+                    formAtm.ShowDialog();
+                    this.Show();
                 }
                 else
                 {
                     Console.Write("Card doesn't exists!");
                 }
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            txtCardNumber.Text = "";
         }
     }
 }
