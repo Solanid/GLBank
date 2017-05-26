@@ -49,6 +49,8 @@
             this.btnRightPanel3 = new System.Windows.Forms.Button();
             this.btnRightPanel4 = new System.Windows.Forms.Button();
             this.panelATM = new System.Windows.Forms.Panel();
+            this.lblExit = new System.Windows.Forms.Label();
+            this.lblBack = new System.Windows.Forms.Label();
             this.lblBalance = new System.Windows.Forms.Label();
             this.lblMenuLanguage = new System.Windows.Forms.Label();
             this.lblMenuBalance = new System.Windows.Forms.Label();
@@ -58,9 +60,24 @@
             this.txtPin = new System.Windows.Forms.TextBox();
             this.lblLangEnglish = new System.Windows.Forms.Label();
             this.lblLangSlovak = new System.Windows.Forms.Label();
-            this.lblBack = new System.Windows.Forms.Label();
-            this.lblExit = new System.Windows.Forms.Label();
+            this.panelChangePin = new System.Windows.Forms.Panel();
+            this.lblP2Exit = new System.Windows.Forms.Label();
+            this.lblP2Back = new System.Windows.Forms.Label();
+            this.lblP2Hints = new System.Windows.Forms.Label();
+            this.lblP2ReEnterPin = new System.Windows.Forms.Label();
+            this.lblP2EnterNewPin = new System.Windows.Forms.Label();
+            this.txtP2ReNewPass = new System.Windows.Forms.TextBox();
+            this.txtP2NewPass = new System.Windows.Forms.TextBox();
+            this.lblP2ChangePinTab = new System.Windows.Forms.Label();
+            this.lblSum = new System.Windows.Forms.Label();
+            this.lbl500eur = new System.Windows.Forms.Label();
+            this.lbl200eur = new System.Windows.Forms.Label();
+            this.lbl100eur = new System.Windows.Forms.Label();
+            this.lbl20eur = new System.Windows.Forms.Label();
+            this.lbl10eur = new System.Windows.Forms.Label();
+            this.lbl50eur = new System.Windows.Forms.Label();
             this.panelATM.SuspendLayout();
+            this.panelChangePin.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnKeyboard1
@@ -170,6 +187,7 @@
             this.btnLeftPanel1.Size = new System.Drawing.Size(50, 50);
             this.btnLeftPanel1.TabIndex = 8;
             this.btnLeftPanel1.UseVisualStyleBackColor = true;
+            this.btnLeftPanel1.Click += new System.EventHandler(this.btnLeftPanel1_Click);
             // 
             // btnKeyboardC
             // 
@@ -198,6 +216,7 @@
             this.btnLeftPanel2.Size = new System.Drawing.Size(50, 50);
             this.btnLeftPanel2.TabIndex = 10;
             this.btnLeftPanel2.UseVisualStyleBackColor = true;
+            this.btnLeftPanel2.Click += new System.EventHandler(this.btnLeftPanel2_Click);
             // 
             // btnLeftPanel3
             // 
@@ -255,6 +274,7 @@
             // 
             // panelATM
             // 
+            this.panelATM.Controls.Add(this.panelChangePin);
             this.panelATM.Controls.Add(this.lblExit);
             this.panelATM.Controls.Add(this.lblBack);
             this.panelATM.Controls.Add(this.lblBalance);
@@ -271,6 +291,28 @@
             this.panelATM.Size = new System.Drawing.Size(300, 250);
             this.panelATM.TabIndex = 17;
             this.panelATM.Paint += new System.Windows.Forms.PaintEventHandler(this.panelATM_Paint);
+            // 
+            // lblExit
+            // 
+            this.lblExit.AutoSize = true;
+            this.lblExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblExit.Location = new System.Drawing.Point(262, 25);
+            this.lblExit.Name = "lblExit";
+            this.lblExit.Size = new System.Drawing.Size(35, 20);
+            this.lblExit.TabIndex = 10;
+            this.lblExit.Text = "Exit";
+            this.lblExit.Click += new System.EventHandler(this.label1_Click_2);
+            // 
+            // lblBack
+            // 
+            this.lblBack.AutoSize = true;
+            this.lblBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblBack.Location = new System.Drawing.Point(3, 193);
+            this.lblBack.Name = "lblBack";
+            this.lblBack.Size = new System.Drawing.Size(45, 20);
+            this.lblBack.TabIndex = 9;
+            this.lblBack.Text = "Back";
+            this.lblBack.Visible = false;
             // 
             // lblBalance
             // 
@@ -390,27 +432,181 @@
             this.lblLangSlovak.Text = "Slovensky";
             this.lblLangSlovak.Click += new System.EventHandler(this.label1_Click);
             // 
-            // lblBack
+            // panelChangePin
             // 
-            this.lblBack.AutoSize = true;
-            this.lblBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblBack.Location = new System.Drawing.Point(3, 193);
-            this.lblBack.Name = "lblBack";
-            this.lblBack.Size = new System.Drawing.Size(45, 20);
-            this.lblBack.TabIndex = 9;
-            this.lblBack.Text = "Back";
-            this.lblBack.Visible = false;
+            this.panelChangePin.Controls.Add(this.lblSum);
+            this.panelChangePin.Controls.Add(this.lbl500eur);
+            this.panelChangePin.Controls.Add(this.lbl200eur);
+            this.panelChangePin.Controls.Add(this.lbl100eur);
+            this.panelChangePin.Controls.Add(this.lbl20eur);
+            this.panelChangePin.Controls.Add(this.lbl10eur);
+            this.panelChangePin.Controls.Add(this.lbl50eur);
+            this.panelChangePin.Controls.Add(this.lblP2Exit);
+            this.panelChangePin.Controls.Add(this.lblP2Back);
+            this.panelChangePin.Controls.Add(this.lblP2Hints);
+            this.panelChangePin.Controls.Add(this.lblP2ReEnterPin);
+            this.panelChangePin.Controls.Add(this.lblP2EnterNewPin);
+            this.panelChangePin.Controls.Add(this.txtP2ReNewPass);
+            this.panelChangePin.Controls.Add(this.txtP2NewPass);
+            this.panelChangePin.Controls.Add(this.lblP2ChangePinTab);
+            this.panelChangePin.Location = new System.Drawing.Point(0, 1);
+            this.panelChangePin.Name = "panelChangePin";
+            this.panelChangePin.Size = new System.Drawing.Size(300, 249);
+            this.panelChangePin.TabIndex = 12;
+            this.panelChangePin.Paint += new System.Windows.Forms.PaintEventHandler(this.panelChangePin_Paint);
             // 
-            // lblExit
+            // lblP2Exit
             // 
-            this.lblExit.AutoSize = true;
-            this.lblExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblExit.Location = new System.Drawing.Point(262, 25);
-            this.lblExit.Name = "lblExit";
-            this.lblExit.Size = new System.Drawing.Size(35, 20);
-            this.lblExit.TabIndex = 10;
-            this.lblExit.Text = "Exit";
-            this.lblExit.Click += new System.EventHandler(this.label1_Click_2);
+            this.lblP2Exit.AutoSize = true;
+            this.lblP2Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblP2Exit.Location = new System.Drawing.Point(262, 25);
+            this.lblP2Exit.Name = "lblP2Exit";
+            this.lblP2Exit.Size = new System.Drawing.Size(35, 20);
+            this.lblP2Exit.TabIndex = 11;
+            this.lblP2Exit.Text = "Exit";
+            // 
+            // lblP2Back
+            // 
+            this.lblP2Back.AutoSize = true;
+            this.lblP2Back.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblP2Back.Location = new System.Drawing.Point(3, 192);
+            this.lblP2Back.Name = "lblP2Back";
+            this.lblP2Back.Size = new System.Drawing.Size(45, 20);
+            this.lblP2Back.TabIndex = 10;
+            this.lblP2Back.Text = "Back";
+            // 
+            // lblP2Hints
+            // 
+            this.lblP2Hints.AutoSize = true;
+            this.lblP2Hints.Location = new System.Drawing.Point(121, 216);
+            this.lblP2Hints.Name = "lblP2Hints";
+            this.lblP2Hints.Size = new System.Drawing.Size(104, 13);
+            this.lblP2Hints.TabIndex = 7;
+            this.lblP2Hints.Text = "Press OK to Confirm.";
+            // 
+            // lblP2ReEnterPin
+            // 
+            this.lblP2ReEnterPin.AutoSize = true;
+            this.lblP2ReEnterPin.Location = new System.Drawing.Point(65, 117);
+            this.lblP2ReEnterPin.Name = "lblP2ReEnterPin";
+            this.lblP2ReEnterPin.Size = new System.Drawing.Size(98, 13);
+            this.lblP2ReEnterPin.TabIndex = 6;
+            this.lblP2ReEnterPin.Text = "Re-Enter New PIN:";
+            // 
+            // lblP2EnterNewPin
+            // 
+            this.lblP2EnterNewPin.AutoSize = true;
+            this.lblP2EnterNewPin.Location = new System.Drawing.Point(65, 63);
+            this.lblP2EnterNewPin.Name = "lblP2EnterNewPin";
+            this.lblP2EnterNewPin.Size = new System.Drawing.Size(81, 13);
+            this.lblP2EnterNewPin.TabIndex = 5;
+            this.lblP2EnterNewPin.Text = "Enter New PIN:";
+            // 
+            // txtP2ReNewPass
+            // 
+            this.txtP2ReNewPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txtP2ReNewPass.Location = new System.Drawing.Point(65, 128);
+            this.txtP2ReNewPass.MaxLength = 4;
+            this.txtP2ReNewPass.Name = "txtP2ReNewPass";
+            this.txtP2ReNewPass.ReadOnly = true;
+            this.txtP2ReNewPass.Size = new System.Drawing.Size(176, 44);
+            this.txtP2ReNewPass.TabIndex = 4;
+            this.txtP2ReNewPass.Text = "1234";
+            this.txtP2ReNewPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtP2ReNewPass.UseSystemPasswordChar = true;
+            // 
+            // txtP2NewPass
+            // 
+            this.txtP2NewPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txtP2NewPass.Location = new System.Drawing.Point(65, 72);
+            this.txtP2NewPass.MaxLength = 4;
+            this.txtP2NewPass.Name = "txtP2NewPass";
+            this.txtP2NewPass.ReadOnly = true;
+            this.txtP2NewPass.Size = new System.Drawing.Size(176, 44);
+            this.txtP2NewPass.TabIndex = 3;
+            this.txtP2NewPass.Text = "4567";
+            this.txtP2NewPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtP2NewPass.UseSystemPasswordChar = true;
+            // 
+            // lblP2ChangePinTab
+            // 
+            this.lblP2ChangePinTab.AutoSize = true;
+            this.lblP2ChangePinTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblP2ChangePinTab.Location = new System.Drawing.Point(101, 25);
+            this.lblP2ChangePinTab.Name = "lblP2ChangePinTab";
+            this.lblP2ChangePinTab.Size = new System.Drawing.Size(95, 20);
+            this.lblP2ChangePinTab.TabIndex = 0;
+            this.lblP2ChangePinTab.Text = "Change PIN";
+            // 
+            // lblSum
+            // 
+            this.lblSum.AutoSize = true;
+            this.lblSum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblSum.Location = new System.Drawing.Point(120, 109);
+            this.lblSum.Name = "lblSum";
+            this.lblSum.Size = new System.Drawing.Size(58, 20);
+            this.lblSum.TabIndex = 29;
+            this.lblSum.Text = "1000 €";
+            // 
+            // lbl500eur
+            // 
+            this.lbl500eur.AutoSize = true;
+            this.lbl500eur.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbl500eur.Location = new System.Drawing.Point(248, 189);
+            this.lbl500eur.Name = "lbl500eur";
+            this.lbl500eur.Size = new System.Drawing.Size(49, 20);
+            this.lbl500eur.TabIndex = 28;
+            this.lbl500eur.Text = "500 €";
+            // 
+            // lbl200eur
+            // 
+            this.lbl200eur.AutoSize = true;
+            this.lbl200eur.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbl200eur.Location = new System.Drawing.Point(248, 133);
+            this.lbl200eur.Name = "lbl200eur";
+            this.lbl200eur.Size = new System.Drawing.Size(49, 20);
+            this.lbl200eur.TabIndex = 27;
+            this.lbl200eur.Text = "200 €";
+            // 
+            // lbl100eur
+            // 
+            this.lbl100eur.AutoSize = true;
+            this.lbl100eur.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbl100eur.Location = new System.Drawing.Point(248, 77);
+            this.lbl100eur.Name = "lbl100eur";
+            this.lbl100eur.Size = new System.Drawing.Size(49, 20);
+            this.lbl100eur.TabIndex = 26;
+            this.lbl100eur.Text = "100 €";
+            // 
+            // lbl20eur
+            // 
+            this.lbl20eur.AutoSize = true;
+            this.lbl20eur.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbl20eur.Location = new System.Drawing.Point(3, 77);
+            this.lbl20eur.Name = "lbl20eur";
+            this.lbl20eur.Size = new System.Drawing.Size(40, 20);
+            this.lbl20eur.TabIndex = 25;
+            this.lbl20eur.Text = "20 €";
+            // 
+            // lbl10eur
+            // 
+            this.lbl10eur.AutoSize = true;
+            this.lbl10eur.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbl10eur.Location = new System.Drawing.Point(3, 22);
+            this.lbl10eur.Name = "lbl10eur";
+            this.lbl10eur.Size = new System.Drawing.Size(40, 20);
+            this.lbl10eur.TabIndex = 24;
+            this.lbl10eur.Text = "10 €";
+            // 
+            // lbl50eur
+            // 
+            this.lbl50eur.AutoSize = true;
+            this.lbl50eur.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbl50eur.Location = new System.Drawing.Point(3, 133);
+            this.lbl50eur.Name = "lbl50eur";
+            this.lbl50eur.Size = new System.Drawing.Size(40, 20);
+            this.lbl50eur.TabIndex = 23;
+            this.lbl50eur.Text = "50 €";
             // 
             // ATMForm
             // 
@@ -442,6 +638,8 @@
             this.Text = "ATMForm";
             this.panelATM.ResumeLayout(false);
             this.panelATM.PerformLayout();
+            this.panelChangePin.ResumeLayout(false);
+            this.panelChangePin.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -480,5 +678,21 @@
         private System.Windows.Forms.Label lblBalance;
         private System.Windows.Forms.Label lblBack;
         private System.Windows.Forms.Label lblExit;
+        private System.Windows.Forms.Panel panelChangePin;
+        private System.Windows.Forms.Label lblP2Exit;
+        private System.Windows.Forms.Label lblP2Back;
+        private System.Windows.Forms.Label lblP2Hints;
+        private System.Windows.Forms.Label lblP2ReEnterPin;
+        private System.Windows.Forms.Label lblP2EnterNewPin;
+        private System.Windows.Forms.TextBox txtP2ReNewPass;
+        private System.Windows.Forms.TextBox txtP2NewPass;
+        private System.Windows.Forms.Label lblP2ChangePinTab;
+        private System.Windows.Forms.Label lblSum;
+        private System.Windows.Forms.Label lbl500eur;
+        private System.Windows.Forms.Label lbl200eur;
+        private System.Windows.Forms.Label lbl100eur;
+        private System.Windows.Forms.Label lbl20eur;
+        private System.Windows.Forms.Label lbl10eur;
+        private System.Windows.Forms.Label lbl50eur;
     }
 }

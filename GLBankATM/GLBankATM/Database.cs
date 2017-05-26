@@ -186,5 +186,34 @@ namespace GLBankATM
             return 0;
         }
 
+        public bool changePin(int oldPin, int newPin, int idCard)
+        {
+            String query = "UPDATE cards SET pin = "+newPin+" WHERE pin like "+oldPin+" AND idCard like "+idCard;
+            if (connection != null)
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    int state = cmd.ExecuteNonQuery();
+                    return state!= 0?true:false;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("MySQL changePin error:" + ex.ToString());
+                }
+            }
+            return false;
+        }
+
+        public bool saveWithdrawalHistory()
+        {
+            return false;
+        }
+
+        public bool withdrawMoney()
+        {
+            return false;
+        }
+
     }
 }

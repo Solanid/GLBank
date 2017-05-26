@@ -53,6 +53,12 @@
     <Compile Include="ATMForm.Designer.cs">
       <DependentUpon>ATMForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ATMUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ATMUserControl.Designer.cs">
+      <DependentUpon>ATMUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CenterMy.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Form1.cs">
@@ -66,6 +72,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ATMForm.resx">
       <DependentUpon>ATMForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ATMUserControl.resx">
+      <DependentUpon>ATMUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

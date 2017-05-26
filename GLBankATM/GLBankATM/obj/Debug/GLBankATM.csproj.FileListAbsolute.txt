@@ -10,3 +10,4 @@ c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\obj\D
 c:\users\solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\obj\Debug\GLBankATM.pdb
 C:\Users\Solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\bin\Debug\MySql.Data.dll
 C:\Users\Solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\bin\Debug\MySql.Data.xml
+C:\Users\Solanid\documents\visual studio 2015\Projects\GLBankATM\GLBankATM\obj\Debug\GLBankATM.ATMUserControl.resources
