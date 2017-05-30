@@ -12,7 +12,8 @@ namespace GLBankATM
 {
     public enum States
     {
-        LANGUAGE, ENTERPIN, PINOK, BALANCE, CHANGELANGUAGE, EXIT, CHANGEPIN, REENTEROLDPIN, PINCHANGED, PINNOTCHANGED, CARDBLOCKED, WITHDRAWAL
+        LANGUAGE, ENTERPIN, PINOK, BALANCE, CHANGELANGUAGE, EXIT, CHANGEPIN, REENTEROLDPIN, PINCHANGED, PINNOTCHANGED, CARDBLOCKED, WITHDRAWAL,
+        WITHDRAWALOK, WITHDRAWALFAILED
     }
     public enum Languages
     {
@@ -21,12 +22,12 @@ namespace GLBankATM
 
     public partial class ATMForm : Form
     {
-        public ATMForm(long cardNumber, int idCard)
+
+        public ATMForm(Card card)
         {
             InitializeComponent();
             stateLanguage();
-            this.cardNumber = cardNumber;
-            this.idCard = idCard;
+            this.card = card;
             lblEnterPin.center();
             this.CenterToScreen();
             panelChangePin.Visible = false;
@@ -34,11 +35,10 @@ namespace GLBankATM
             panelChangePin.BorderStyle = BorderStyle.FixedSingle;
         }
 
+        Card card;
         int amount;
         TextBox txtInput;
         int newPin;
-        long cardNumber;
-        int idCard;
         States state = new States();
         Languages lang = new Languages();
         
@@ -105,6 +105,12 @@ namespace GLBankATM
                 case States.WITHDRAWAL:
                     stateWithdrawal();
                     break;
+                case States.WITHDRAWALOK:
+                    stateWithdrawalOk();
+                    break;
+                case States.WITHDRAWALFAILED:
+                    stateWithdrawalFailed();
+                    break;
                 default:
                     break;
             }
@@ -115,6 +121,28 @@ namespace GLBankATM
             this.Close();
         }
         
+        void stateWithdrawalOk()
+        {
+            disableAmountsLabels();
+            disableSideButtons();
+            disableKeyboard();
+            lblSum.Visible = true;
+            lblSum.center();
+            lblSum.Text = MessagesLang.getMessageWithdrawOk(lang);
+            btnKeyboardOK.Enabled = true;
+        }
+
+        void stateWithdrawalFailed()
+        {
+            disableAmountsLabels();
+            disableSideButtons();
+            disableKeyboard();
+            lblSum.Visible = true;
+            lblSum.center();
+            lblSum.Text = MessagesLang.getMessageWithdrawNotEnoughtMoney(lang);
+            btnKeyboardOK.Enabled = true;
+        }
+
         void stateWithdrawal()
         {
             enableAmountLabels();
@@ -570,39 +598,41 @@ namespace GLBankATM
         {
             if (state == States.ENTERPIN && txtPin.TextLength == 4)
             {
-                int loginAttemnts = new Database().getNumOfUnsuccessfullLoginAttemnts(idCard);
+                int loginAttemnts = new Database().getNumOfUnsuccessfullLoginAttemnts(card.getIdCard());
 
-                if (new Database().isPinCorrect(Int32.Parse(txtPin.Text), cardNumber) && new Database().isCardBlocked(cardNumber) == false && loginAttemnts < 3)
+                if (new Database().isPinCorrect(Int32.Parse(txtPin.Text), card.getCardNumber()) && new Database().isCardBlocked(card.getCardNumber()) == false && loginAttemnts < 3)
                 {
-                    new Database().resetLoginAttemnts(idCard);
+                    new Database().resetLoginAttemnts(card.getIdCard());
                     txtPin.Text = "";
                     changeState(States.PINOK);
                 }
                 else if (loginAttemnts < 2)
                 {
                     txtPin.Text = "";
-                    new Database().incorrectPin(idCard);
+                    new Database().incorrectPin(card.getIdCard());
                 }
                 else if (loginAttemnts >= 2)
                 {
-                    new Database().incorrectPin(idCard);
+                    new Database().incorrectPin(card.getIdCard());
                     disableKeyboard();
                     lblEnterPin.Text = MessagesLang.getMessageBlockedCard(lang);
                 }
             }
+
             else if (state == States.CHANGEPIN && txtP2NewPass.Text == txtP2ReNewPass.Text && txtP2NewPass.TextLength == 4)
             {
                 newPin = Int32.Parse(txtP2NewPass.Text);
                 changeState(States.REENTEROLDPIN);
             }
+
             else if (state == States.REENTEROLDPIN && txtP2NewPass.TextLength == 4)
             {
-                int loginAttemnts = new Database().getNumOfUnsuccessfullLoginAttemnts(idCard);
+                int loginAttemnts = new Database().getNumOfUnsuccessfullLoginAttemnts(card.getIdCard());
 
-                if (new Database().isPinCorrect(Int32.Parse(txtP2NewPass.Text), cardNumber) && new Database().isCardBlocked(cardNumber) == false && loginAttemnts < 3)
+                if (new Database().isPinCorrect(Int32.Parse(txtP2NewPass.Text), card.getCardNumber()) && new Database().isCardBlocked(card.getCardNumber()) == false && loginAttemnts < 3)
                 {
-                    new Database().resetLoginAttemnts(idCard);
-                    if (new Database().changePin(Int32.Parse(txtP2NewPass.Text), newPin, idCard))
+                    new Database().resetLoginAttemnts(card.getIdCard());
+                    if (new Database().changePin(Int32.Parse(txtP2NewPass.Text), newPin, card.getIdCard()))
                     {
                         txtP2NewPass.Text = "";
                         changeState(States.PINCHANGED);
@@ -616,11 +646,11 @@ namespace GLBankATM
                 else if (loginAttemnts < 2)
                 {
                     txtPin.Text = "";
-                    new Database().incorrectPin(idCard);
+                    new Database().incorrectPin(card.getIdCard());
                 }
                 else if (loginAttemnts >= 2)
                 {
-                    new Database().incorrectPin(idCard);
+                    new Database().incorrectPin(card.getIdCard());
                     disableKeyboard();
                     changeState(States.CARDBLOCKED);
                 }
@@ -638,6 +668,22 @@ namespace GLBankATM
             {
                 changeState(States.PINOK);
             }
+            else if (state == States.WITHDRAWAL)
+            {
+                if (new Database().saveWithdrawalHistory(card, amount, 1) && new Database().withdrawMoney(card, amount, new Database().getBalance(card.getIdCard())))
+                    changeState(States.WITHDRAWALOK);
+                else
+                    changeState(States.WITHDRAWALFAILED);
+            }
+            else if (state == States.WITHDRAWALOK)
+            {
+                changeState(States.EXIT);
+            }
+            else if (state == States.WITHDRAWALFAILED)
+            {
+                changeState(States.WITHDRAWAL);
+            }
+
         }
 
         private void label1_Click_1(object sender, EventArgs e)
@@ -669,7 +715,7 @@ namespace GLBankATM
         {
             if (state == States.PINOK)
             {
-                lblBalance.Text = new Database().getBalance(idCard) + " €";
+                lblBalance.Text = new Database().getBalance(card.getIdCard()) + " €";
                 changeState(States.BALANCE);
             }
             else if (state == States.CHANGEPIN)

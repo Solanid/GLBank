@@ -43,9 +43,9 @@ namespace GLBankATM
             }
         }
 
-        public Nullable<int> existCard(long idcard)
+        public Card existCard(long idcard)
         {
-            String query = "SELECT idCard FROM cards WHERE cardNumber LIKE " + idcard;
+            String query = "SELECT * FROM cards WHERE cardNumber LIKE " + idcard;
             if (connection != null)
             {
                 try
@@ -54,7 +54,13 @@ namespace GLBankATM
                     MySqlDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
                     {
-                        return reader.GetInt32("idCard");
+                        bool blocked = reader.GetChar("blocked") == 'T' ? true : false;
+                        return new Card(
+                                reader.GetInt32("idCard"),
+                                reader.GetInt64("cardNumber"),
+                                reader.GetInt64("idAcc"),
+                                blocked
+                            );
                     }
                 }catch (Exception ex)
                 {
@@ -205,15 +211,50 @@ namespace GLBankATM
             return false;
         }
 
-        public bool saveWithdrawalHistory()
+        //TODO idAccountu vytahovat, spravit si objekt card.
+
+        public bool saveWithdrawalHistory(Card card, float amount, int idATM)
         {
+            String query = "INSERT INTO atmwithdrawals (idAcc, amount, idATM, idCard) VALUES("+card.getCardNumber()+","+amount+","+idATM+","+card.getIdCard()+")";
+            if (connection != null)
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("MySQL incorrectPin error:" + ex.ToString());
+                }
+            }
             return false;
         }
 
-        public bool withdrawMoney()
+        public bool withdrawMoney(Card card, float amount, float balance)
         {
+            if (balance < amount)
+                return false;
+            String query = "UPDATE accounts SET balance=balance-"+amount+" WHERE idacc like "+card.getIdAcc();
+            if (connection != null)
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    int state = cmd.ExecuteNonQuery();
+                    return state != 0 ? true : false;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("MySQL changePin error:" + ex.ToString());
+                }
+            }
             return false;
         }
+
 
     }
+
+    
 }

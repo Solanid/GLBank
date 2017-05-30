@@ -28,8 +28,36 @@ namespace GLBankATM
         private static String[] messCardBlocked = { "Your Card was BLOCKED!:", "Vaša karta bola zablokovaná!", "Deine karte war gebrochen!", "あなたのカードはブロックされました！" };
 
         private static String[] messWithdrawMoney = { "Withdraw Money", "Výber peňazí", "Geld abheben", "お金を引き出します" };
+        private static String[] messWithdrawOk = { "Take your money!", "Vezmite si peniaze!", "Nehmen Sie das Geld!", "お金を持っていこう！" };
+        private static String[] messWithdrawNotEnoughtMoney = { "You do not have that much money!", "Nemáte toľko peňazí!", "Sie haben nicht so viel Geld haben!", "あなたはそんなにお金を持っていません！" };
 
 
+
+        public static string getMessageWithdrawOk(Languages lang)
+        {
+            if (lang == Languages.ENG)
+                return messWithdrawOk[0];
+            else if (lang == Languages.SVK)
+                return messWithdrawOk[1];
+            else if (lang == Languages.DE)
+                return messWithdrawOk[2];
+            else if (lang == Languages.JPN)
+                return messWithdrawOk[3];
+            return null;
+        }
+
+        public static string getMessageWithdrawNotEnoughtMoney(Languages lang)
+        {
+            if (lang == Languages.ENG)
+                return messWithdrawNotEnoughtMoney[0];
+            else if (lang == Languages.SVK)
+                return messWithdrawNotEnoughtMoney[1];
+            else if (lang == Languages.DE)
+                return messWithdrawNotEnoughtMoney[2];
+            else if (lang == Languages.JPN)
+                return messWithdrawNotEnoughtMoney[3];
+            return null;
+        }
 
         public static string getMessageWithdrawMoney(Languages lang)
         {

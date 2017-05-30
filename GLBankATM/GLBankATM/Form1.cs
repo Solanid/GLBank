@@ -36,12 +36,12 @@ namespace GLBankATM
 
             if (long.TryParse(idcard, out cardNumber))
             {
-                int? idCard = new Database().existCard(cardNumber);
-                if (idCard != null && new Database().isCardBlocked(cardNumber) == false)
+                Card card = new Database().existCard(cardNumber);
+                if (card != null && new Database().isCardBlocked(cardNumber) == false)
                 {
                     txtCardNumber.Text = "";
                     this.Hide();
-                    ATMForm formAtm = new ATMForm(cardNumber, idCard.Value);
+                    ATMForm formAtm = new ATMForm(card);
                     formAtm.ShowDialog();
                     this.Show();
                 }
